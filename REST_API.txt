@@ -1,0 +1,53 @@
+https://gmlwjd9405.github.io/2018/09/21/rest-and-restful.html
+https://meetup.toast.com/posts/92
+
+<REST API 설계 규칙>
+
+도큐먼트 : 객체 인스턴스나 데이터베이스 레코드와 유사한 개념
+컬렉션 : 서버에서 관리하는 디렉터리라는 리소스
+스토어 : 클라이언트에서 관리하는 리소스 저장소
+
+1. URI는 정보의 자원을 표현해야 한다
+	- 가급적 명사/소문자
+	- 도큐먼트 이름으로는 단수명사
+	- 컬렉션 이름으로는 복수명사
+	- 스토어 이름으로는 복수명사
+		ex) GET /Member/1 -> GET /members/1
+
+2. 자원에 대한 행위는 HTTP Method(GET, PUT, POST, DELETE 등)로 표현
+	- URI에 행위가 들어가면 안된다.
+		ex) GET /members/delete/1 -> DELETE /members/1
+	- 경로 중 변하는 부분은 유일 값으로 대체(id는 하나의 특정 resource를 나타내는 고유값이다)
+		ex) 회원 추가 시
+		 GET	/members/insert/2 (x)
+		 POST	/members/2 (o) -- 쉽게 생각하면 컬렉션은 테이블, 도큐먼트는 데이터(행)
+
+3. 슬래시 구분자는 계층 관계를 나타낸다.
+
+4. URI 마지막 문자로 슬래시를 포함하지 않는다.
+	ex) http://restapi.example.com/houses/apartments/ (x)
+
+5. 불가피하게 길어지는 URI는 하이픈-을 사용 해 가독성을 높이며, _는 사용하지 않는다.
+
+6. 파일 확장자는 URI에 포함하지 않으며 리소스간 연관 관계는 /리소스명/리소스ID/다른리소스명 (일반적으로 소유관계)
+	ex) http://restapi.exaple.com/sports/soccer/players/13
+
+참고 응답상태코드
+
+1xx : 전송 프로토콜 수준의 정보 교환
+2xx : 클라어인트 요청이 성공적으로 수행됨
+3xx : 클라이언트는 요청을 완료하기 위해 추가적인 행동을 취해야 함
+4xx : 클라이언트의 잘못된 요청
+5xx : 서버쪽 오류로 인한 상태코드
+========================================================================================
+github
+https://medium.com/webeveloper/%EA%B9%83%ED%97%88%EB%B8%8C-%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95-github-tutorials-4a63f31bb6a5
+https://medium.com/@pks2974/%EC%9E%90%EC%A3%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B8%B0%EC%B4%88-git-%EB%AA%85%EB%A0%B9%EC%96%B4-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-533b3689db81
+https://somjang.tistory.com/entry/Git-fatal-Not-a-valid-object-name-master-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95
+브랜치 생성 시 not a valid object name: 'master'
+원인: 아직 commit을 한번도 하지 않은 repository 이므로
+해결방법: 최소 1번 이상의 commit
+ex) git add .
+git commit -m "initial commit"
+git branch branchSY  --로컬 브랜치 생성
+git checkout branchSY
