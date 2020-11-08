@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.order.repository.IOrderDetailMapper">
+     
+	<resultMap id = "OrderDetailMap" type = "com.fw.shopping.order.model.OrderDetailVO">
+		<id property="orderId" column="order_id"/>
+		<id property="userNo" column="user_no"/>
+		<id property="orderDetailsNo" column="order_detail_no"/>
+		<result property="orderPerson" column="order_person"/>
+		<result property="orderAddr1" column="order_addr1"/>
+		<result property="orderAddr2" column="order_add2"/>
+		<result property="orderPhone" column="order_phone"/>
+		<result property="orderPrice" column="order_price"/>
+		<result property="orderRegDate" column="order_reg_date"/>
+		<result property="gdsNo" column="gds_no"/>
+		<result property="optionNo" column="option_no"/>
+		<result property="orderStock" column="order_stock"/>
+		<result property="deliveryStatus" column="delivery_status"/>
+		<result property="invoiceNo" column="invoice_no"/>
+		<result property="orderStatus" column="order_status"/>
+	</resultMap>
+	
+	<insert id="addOdrDetail">
+		INSERT INTO order_detail_tb
+		(order_stock, delivery_status, invoice_no, gds_no, order_id, option_no) 
+		VALUES (#{orderStock}, #{deliveryStatus}, #{invoiceNo}, #{gdsNo}, #{orderId}, #{optionNo})
+	</insert>
+	
+	<select id="getOrderList" resultType="String">
+		SELECT * 
+		FROM order_tb	
+		ORDER BY order_id DESC 
+		LIMIT #{pageStart}, 20
+	</select>
+	
+	<select id="getOdrDetailList" resultMap="OrderDetailMap">
+		SELECT * 
+		FROM order_detail_tb
+		WHERE order_id=#{orderId}
+	</select>
+	
+	<select id="getMyOrderList" resultMap="OrderDetailMap">
+		SELECT * 
+		FROM order_tb
+		WHERE user_no=#{userNo}
+	</select>
+		
+	<select id="getOrderInfo" resultMap="OrderDetailMap">
+		SELECT * 
+		FROM order_tb, order_detail_tb
+		WHERE order_tb.order_id = order_detail_tb.order_id
+		AND order_tb.order_id = #{orderId}
+	</select>
+	
+	<update id = "enrollInvoiceNo">
+		UPDATE order_detail_tb
+		SET invoice_no = #{invoiceNo}
+		WHERE order_detail_no = #{orderDetailNo}
+	</update>
+		
+	<update id = "deliveryComplete">
+		UPDATE order_detail_tb
+		SET delivery_status = 5
+		WHERE order_detail_no = #{orderDetailNo}
+	</update>
+
+	<update id="gdsProbProcess">
+		UPDATE order_detail_tb
+		SET order_status = #{orderStatus}
+		WHERE order_detail_no = #{orderDetailNo}
+	</update>
+			
+</mapper>    

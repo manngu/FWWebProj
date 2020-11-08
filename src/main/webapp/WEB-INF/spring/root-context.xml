@@ -26,6 +26,15 @@
 	
 	<!-- 매퍼의 인터페이스를 스캔하는 설정 -->
 	<mybatis-spring:scan base-package="com.fw.shopping.test.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.admin.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.cart.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.goods.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.member.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.mypage.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.notice.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.order.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.qna.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.review.repository"/>
 
 		
 </beans>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.goods.repository.IGoodsMapper">
+    
+     <resultMap id="GoodsMap" type="com.fw.shopping.order.model.GoodsVO">
+			<id property="gdsNo" column="gds_no"/>
+			<result property="cateCode" column="cate_no"/>
+			<result property="gdsName" column="gds_name"/>
+			<result property="gdsDes" column="gds_des"/>
+			<result property="gdsThumbImg" column="gds_thumb_img"/>
+			<result property="gdsRegDate" column="gds_dday"/>
+			<result property="gdsDday" column="gds_dday"/>
+			<result property="gdsType" column="gds_status"/>
+			<result property="gdsSales" column="gds_status"/>
+			<result property="gdsStatus" column="gds_status"/>
+			<result property="gdsViewCnt" column="gds_view_cnt"/>
+			<result property="gdsLimit" column="gds_limit"/>
+			<result property="gdsPrice" column="gds_price"/>
+			<result property="gdsDiscount" column="gds_discount"/>
+
+	</resultMap>
+	
+	<insert id="addGoods">
+		INSERT INTO goods_tb
+		(cate_no, gds_type, gds_name, gds_des, gds_thumb_img, gds_dday, gds_status,
+			gds_limit, gds_price)
+		VALUES (#{cateNo}, #{gdsType}, #{gdsName}, #{gdsThumbImg}, #{gdsDday}, 
+			#{gds_status}, #{gdsLimit}, #{gdsPrice})
+	</insert>
+	
+	<update id="modifyGoods">
+		UPDATE goods_tb
+		SET cate_no=#{cateNo}, gds_type=#{gdsType}, gds_name=#{gdsName},
+			gds_des=#{gdsDes}, gds_thumb_img=#{gdsThumbImg}, gds_dday=#{gdsDday},
+			gds_sales=#{gdsSales}, gds_status=#{gdsStatus}, gds_limit=#{gdsLimit},
+			gds_price=#{gdsPrice}, gds_discount=#{gdsDiscount} 
+		WHERE gds_no=#{gdsNo}
+	</update>
+	
+	<update id="deleteGoods">
+		UPDATE goods_tb
+		SET gds_status=1
+		WHERE gds_no=#{gdsNo}
+	</update>
+	
+	<select id="getGoodsList" resultMap="GoodsMap">
+		SELECT *
+		FROM goods_tb
+		LIMIT #{pageStart}, 20
+	</select>
+
+</mapper>    

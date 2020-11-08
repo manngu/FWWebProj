@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.member.repository.ICategoryMapper">
+
+	<resultMap id="MemberMap" type="com.fw.shopping.member.model.MemberVO">
+		<id property="userNo" column="user_no" />
+		<result property="adminVerify" column="admin_verify" />
+		<result property="userEmail" column="user_email" />
+		<result property="userPw" column="user_pw" />
+		<result property="userName" column="user_name" />
+		<result property="userPhone" column="user_phone" />
+		<result property="userAddr1" column="user_addr1" />
+		<result property="userAddr2" column="user_addr2" />
+		<result property="userRegDate" column="user_reg_date" />
+	</resultMap>
+	
+	<insert id="addMember">
+		INSERT INTO member_tb
+		(user_email, user_pw, user_name, user_phone, user_addr1, user_addr2)
+		VALUES (#{userEmail}, #{userPw}, #{userName}, #{userPhone}, #{userAddr1}, #{userAddr2})
+	</insert>
+	
+	<delete id="deleteMember">
+		DELETE FROM member_tb
+		WHERE user_no=#{userNo}
+	</delete>
+	
+	<update id="modifyMember">
+		UPDATE member_tb
+		SET user_pw=#{userPw}, user_phone=#{userPhone}, user_addr1=#{userAddr1}, user_addr2=#{userAddr2}
+		WHERE user_no=#{userNo}
+	</update>
+	
+	<select id="showMemInfo" resultMap="MemberMap">
+		SELECT * FROM member_tb
+		WHERE user_no=#{userNo}
+	</select>
+		
+</mapper>    

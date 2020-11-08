@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.order.repository.IOrderMapper">
+ 
+	<insert id="addOrder">
+		INSERT INTO order_tb
+		(order_id, order_person, order_addr1, order_add2, order_phone, order_price, user_no) 
+		VALUES (#{orderId}, #{orderPerson}, #{orderAddr1}, #{orderAddr2}, #{orderPhone}, #{orderPrice}, #{userNo})
+	</insert>
+
+		
+</mapper>    

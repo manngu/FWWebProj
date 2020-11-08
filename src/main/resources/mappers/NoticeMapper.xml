@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.fw.shopping.notice.repository.INoticeMapper">
+    
+    <resultMap id="NoticeMap" type="com.fw.shopping.notice.model.NoticeVO">
+		<id property="noticeNo" column="notice_no" />
+		<result property="noticeTitle" column="notice_title"/>
+		<result property="noticeContent" column="notice_content"/>
+		<result property="noticeRegDate" column="notice_reg_date"/>
+	</resultMap>
+	
+	<select id="getNoticeList" resultMap="NoticeMap">
+		SELECT * FROM notice_tb
+		ORDER BY notice_reg_date DESC
+		LIMIT #{pageStart}, 20
+	</select>
+	
+	<select id="getNoticeInfo" resultMap="NoticeMap">
+		SELECT * FROM notice_tb
+		WHERE notice_no=#{noticeNo}
+	</select>
+	
+	<insert id="addNotice">
+		INSERT INTO notice_tb
+		(notice_title, notice_content)
+		VALUES (#{noticeTitle}, #{noticeContent})
+	</insert>
+	
+	<update id="modifyNotice">
+		UPDATE notice_tb
+		SET notice_title=#{noticeTitle}, notice_content=#{noticeContent}
+		WHERE notice_no=#{noticeNo}
+	</update>
+	
+	<delete id="deleteNotice">
+		DELETE FROM notice_tb
+		WHERE notice_no= #{noticeNo}
+	</delete>
+	
+</mapper>

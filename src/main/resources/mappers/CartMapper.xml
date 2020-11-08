@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.fw.shopping.cart.repository.ICartMapper">    
+    
+	<resultMap id="CartMap" type="com.fw.shopping.cart.model.CartVO">
+		<id property="cartNo" column="cart_no" />
+		<result property="cartStock" column="cart_stock" />
+		<result property="cartRegDate" column="cart_reg_date" />
+		<result property="userNo" column="user_no" />
+		<result property="gdsNo" column="gds_no" />
+		<result property="optionNo" column="option_no" />
+	</resultMap>
+	
+	<insert id="addCart">
+		INSERT INTO cart_tb
+		(user_no, gds_no, option_no, cart_stock) 
+		VALUES(#{userNo}, #{gdsNo}, #{optionNo}, #{cartStock})
+	</insert>
+	
+	<delete id="deleteCart">
+		DELETE FROM cart_tb
+		WHERE cart_no=#{cartNo}
+	</delete>
+	
+	<update id="updateCart">
+		UPDATE cart_tb
+		SET cart_stock=#{cartStock}
+		WHERE cart_no=#{cartNo}
+	</update>
+	
+	<select id="getCartList" resultMap="cartMap">
+		SELECT goods.gds_name, option.option_name, cart.cart_stock, cart.cart_reg_date
+		FROM cart_tb cart
+		LEFT OUTER JOIN goods_tb goods ON cart.gds_no=goods.gds_no
+		LEFT OUTER JOIN option_tb option ON cart.option_no=option.option_no
+		WHERE cart.user_no=#{userNo}
+	</select>
+
+</mapper>

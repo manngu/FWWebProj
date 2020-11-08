@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.admin.repository.ICategoryMapper">
+
+	<resultMap id="QnaMap" type="com.fw.shopping.admin.model.QnaVO">
+		<id property="qnaNo" column="qna_no"/>
+		<result property="gdsNo" column="gds_no"/>
+		<result property="userNo" column="user_no"/>
+		<result property="qnaRef" column="qna_ref"/>
+		<result property="qnaTitle" column="qna_title"/>
+		<result property="qnaContent" column="qna_content"/>
+		<result property="qnaStatus" column="qna_status"/>
+		<result property="qnaRegDate" column="qna_reg_date"/>
+	</resultMap>
+
+		<insert id="addQna">
+			INSERT INTO qna_tb
+			(gds_no, user_no, qna_status, qna_title, qna_content)
+			VALUES (#{gdsNo}, #{userNo}, #{qnaStatus}, #{qnaTitle}, #{qnaContent})
+		</insert>
+		
+		<update id="modifyQna">
+			UPDATE qna_tb
+			SET qna_status=#{qnaStatus}, qna_title=#{qnaTitle}, qna_content=#{qnaContent}
+			WHERE qna_no = #{qnaNo};
+		</update>
+		
+		<delete id="deleteQna">
+			DELETE FROM qna_tb
+			WHERE qna_no=#{qnaNo}
+		</delete>
+		
+		<select id="getQnaList" resultMap="QnaMap">
+			SELECT * FROM qna_tb
+			WHERE gds_no=#{gdsNo}
+		</select>
+		
+		<select id="showQnaInfo" resultMap="qnaMap">
+			SELECT * FROM qna_tb
+			WHERE qna_no=#{qnaNo}
+		</select>
+
+		<select id="getMyQnaList">
+			SELECT *
+			FROM qna_tb
+			WHERE user_no=#{userNo}
+		</select>
+		
+</mapper>    
