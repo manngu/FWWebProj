@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
- <mapper namespace="com.fw.shopping.admin.repository.ICategoryMapper">
+ <mapper namespace="com.fw.shopping.qna.repository.ICategoryMapper">
 
-	<resultMap id="QnaMap" type="com.fw.shopping.admin.model.QnaVO">
+	<resultMap id="QnaMap" type="com.fw.shopping.qna.model.QnaVO">
 		<id property="qnaNo" column="qna_no"/>
 		<result property="gdsNo" column="gds_no"/>
 		<result property="userNo" column="user_no"/>

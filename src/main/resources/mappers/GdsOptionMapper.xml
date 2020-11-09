@@ -4,7 +4,7 @@
     
  <mapper namespace="com.fw.shopping.goods.repository.IGdsOptionMapper">
     
-         <resultMap id="OptionMap" type="com.fw.shopping.order.model.GdsJoinVO">
+         <resultMap id="OptionMap" type="com.fw.shopping.goods.model.GdsJoinVO">
 			<id property="gdsNo" column="gds_no"/>
 			<result property="cateCode" column="cate_no"/>
 			<result property="gdsName" column="gds_name"/>

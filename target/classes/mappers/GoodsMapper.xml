@@ -4,7 +4,7 @@
     
  <mapper namespace="com.fw.shopping.goods.repository.IGoodsMapper">
     
-     <resultMap id="GoodsMap" type="com.fw.shopping.order.model.GoodsVO">
+     <resultMap id="GoodsMap" type="com.fw.shopping.goods.model.GoodsVO">
 			<id property="gdsNo" column="gds_no"/>
 			<result property="cateCode" column="cate_no"/>
 			<result property="gdsName" column="gds_name"/>
