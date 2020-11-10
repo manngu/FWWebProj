@@ -14,7 +14,12 @@
 	<select id="getNoticeList" resultMap="NoticeMap">
 		SELECT * FROM notice_tb
 		ORDER BY notice_reg_date DESC
-		LIMIT #{pageStart}, 20
+	</select>
+	
+	<select id="countNotices" resultType="int">
+		SELECT COUNT(*)
+		FROM notice_tb
+		<include refid="search" />
 	</select>
 	
 	<select id="getNoticeInfo" resultMap="NoticeMap">

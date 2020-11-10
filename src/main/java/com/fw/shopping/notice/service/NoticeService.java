@@ -2,42 +2,52 @@ package com.fw.shopping.notice.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.fw.shopping.admin.model.SearchVO;
 import com.fw.shopping.notice.model.NoticeVO;
+import com.fw.shopping.notice.repository.INoticeMapper;
 
 @Service
 public class NoticeService implements INoticeService {
 
-	@Override
-	public List<NoticeVO> getNoticeList(SearchVO search) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public NoticeVO getNoticeInfo(int noticeNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	@Inject
+	private INoticeMapper noticeMapper;
+	
 	@Override
 	public void addNotice(NoticeVO noti) {
-		// TODO Auto-generated method stub
-		
+		noticeMapper.addNotice(noti);
 	}
-
+	
+	@Override
+	public NoticeVO getNoticeInfo(int noticeNo) {
+		return noticeMapper.getNoticeInfo(noticeNo);
+	}
+	
 	@Override
 	public void modifyNotice(NoticeVO noti) {
-		// TODO Auto-generated method stub
+		noticeMapper.modifyNotice(noti);		
+	}
+	
+	@Override
+	public void deleteNotice(int noticeNo) {
+		noticeMapper.deleteNotice(noticeNo);
+	}
+	
+	@Override
+	public List<NoticeVO> getNoticeList(SearchVO search) {
+		List<NoticeVO> noticeList = noticeMapper.getNoticeList(search);
 		
+		return noticeList;
 	}
 
 	@Override
-	public void deleteNotice(int noticeNo) {
-		// TODO Auto-generated method stub
-		
-	}
+	public Integer countNotices(SearchVO search) {
+		return noticeMapper.countNotices(search);
 
+	}
+	
 }

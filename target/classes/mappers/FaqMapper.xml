@@ -5,27 +5,53 @@
  <mapper namespace="com.fw.shopping.faq.repository.IFaqMapper">
     
 	<resultMap id="FaqMap" type="com.fw.shopping.faq.model.FaqVO">
+
 		<id property="faqNo" column="faq_no" />
 		<result property="faqTitle" column="faq_title"/>
 		<result property="faqContent" column="faq_content"/>
+		<result property="faqRegDate" column="faq_reg_date"/>
+
 	</resultMap>
 	
-	<select id="getFaqList" resultMap="FaqMap">
-		SELECT * FROM faq_tb
-		ORDER BY faq_reg_date DESC
-		LIMIT #{pageStart}, 20
-	</select>
-	
-	<select id="getFaqInfo" resultMap="FaqMap">
-		SELECT * FROM faq_tb
-		WHERE faq_no=#{faqNo}
-	</select>
-	
+	<!-- 중복되는 동적 SQL문에 대한 처리 -->
+	<sql id = "search">
+		<!-- 동적 SQL구문 -->
+		<if test="condition == 'faqTitle'">
+		WHERE faq_title LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="condition == 'faqContent'">
+		WHERE faq_content LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="condition == 'faqTitleContent'">
+		WHERE faq_title LIKE CONCAT('%', #{keyword},'%')
+		OR faq_content LIKE CONCAT('%', #{keyword},'%')
+		</if>
+	</sql>
+
+
 	<insert id="addFaq">
 		INSERT INTO faq_tb
 		(faq_title, faq_content)
 		VALUES (#{faqTitle}, #{faqContent})
 	</insert>
+	
+	<select id="getFaqList" resultMap="FaqMap">
+		SELECT *
+		FROM faq_tb
+		ORDER BY faq_reg_date DESC
+	</select>
+	
+	<select id="countFaqs" resultType="int">
+		SELECT COUNT(*)
+		FROM faq_tb
+		<include refid="search" />
+	</select>
+	
+	<select id="getFaqInfo" resultMap="FaqMap">
+		SELECT *
+		FROM faq_tb
+		WHERE faq_no=#{faqNo}
+	</select>
 	
 	<update id="modifyFaq">
 		UPDATE faq_tb

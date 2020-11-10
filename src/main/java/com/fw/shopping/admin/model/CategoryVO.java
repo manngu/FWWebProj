@@ -4,7 +4,7 @@ public class CategoryVO{
 
 	private Integer cateCode; // pk
 	private String cateName;
-	private String cateRef;
+	private Integer cateRef;
 
 	public Integer getCateCode() {
 		return cateCode;
@@ -18,10 +18,10 @@ public class CategoryVO{
 	public void setCateName(String cateName) {
 		this.cateName = cateName;
 	}
-	public String getCateRef() {
+	public Integer getCateRef() {
 		return cateRef;
 	}
-	public void setCateRef(String cateRef) {
+	public void setCateRef(Integer cateRef) {
 		this.cateRef = cateRef;
 	}
 
