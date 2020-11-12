@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.fw.shopping.category.repository.ICategoryMapper">
+    
+    <resultMap id="CategoryMap" type="com.fw.shopping.category.model.CategoryVO">
+		<id property="cateNo" column="cate_no" />
+		<result property="cateRef" column="cate_ref"/>
+		<result property="cateName" column="cate_name"/>
+	</resultMap>
+	
+	<resultMap id="CateSelfJoinMap" type="com.fw.shopping.category.model.CateSelfJoinVO">
+		<id property="cateNo" column="cate_no"/>
+		<result property="refName" column="ref_name"/>
+		<result property="cateName" column="cate_name"/>
+	</resultMap>
+	
+	<select id="getCateList" resultMap="CateSelfJoinMap">
+		select b.cate_no, a.cate_name ref_name, b.cate_name
+		from category_tb a
+		right outer join category_tb b
+		on a.cate_no = b.cate_ref
+	</select>
+	
+	<select id="getSupCateList" resultMap="CategoryMap">
+		select *
+		from category_tb
+		where cate_ref is null	
+	</select>
+	
+	<select id="getSubCateList" resultMap="CategoryMap">
+		select *
+		from category_tb
+		where cate_ref is not null	
+	
+	</select>
+	
+	<insert id="addCategory">
+		INSERT INTO category_tb
+		(cate_ref, cate_Name)
+		VALUES(#{cateRef}, #{cateName})
+	</insert>
+	
+	<delete id="deleteCate">
+		DELETE FROM category_tb
+		WHERE cate_no=#{cateNo}
+	</delete>
+	
+	
+	
+	
+	<update id="modifyCategory">
+		UPDATE category_tb
+		SET cate_ref=#{cateRef}, cate_name=#{cateName}
+		WHERE cate_no=#{cateNo}
+	</update>
+	
+
+		
+</mapper>

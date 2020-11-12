@@ -1,0 +1,40 @@
+<html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보수정</title>
+</head>
+
+<body>
+    <h3>회원정보수정</h3>
+    <table>
+        <tr>
+            <td><label for="id">이메일</label></td>
+            <td><input type="text" id="email"></td>
+        </tr>
+        <tr>
+            <td><label for="pwd">비밀번호</label></td>
+            <td><input type="password" id="pwd"></td>
+        </tr>
+        <tr>
+            <td>주소</td>
+            <td><input type="text" id="adress" placeholder="주소">
+                <input type="button" onclick="execDaumPostcode()" value="주소찾기">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="adressdetial">상세주소</label></td>
+            <td><input type="text" id="adressdetail"></td>
+        </tr>
+        <td><label for="phone">전화번호</label></td>
+        <td><input type="text" id="phone"></td>
+        </tr>
+        <td><label for="name">이름</label></td>
+        <td><input type="text" id="name"></td>
+        </tr>
+    </table>
+    <input type="submit" value="회원정보수정">
+</body>
+
+</html></html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>상품등록 페이지</title>
+</head>
+
+<body>
+    <h1>상품등록 페이지</h1>
+    <input type="radio" name="gdstype" checked="checked"> 일반상품
+    <input type="radio" name="gdstype"> 특가상품 <br><br><br>
+    대분류
+    <select>
+        <option value="" selected>선택</option>
+        <option value="top">상의</option>
+        <option value="bottom">하의</option>
+        <option value="acc">잡화</option>
+    </select>
+    소분류
+    <select>
+        <option value="" selected>선택</option>
+        <option value="top">팬츠</option>
+        <option value="bottom">스커트</option>
+    </select> <br><br>
+    카테고리
+    상품명: <input type="text" name="gdsname"> <br><br>
+    가격: <input type="number" name="price"> <br><br>
+    할인율: <input type="number" name="discount" placeholder="0"><br><br>
+    옵션 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button>+</button> <br><br>
+
+    <table border="1px solid black" style="border-collapse:collapse;">
+        <tr>
+            <th>옵션명</th>
+            <th>추가금액</th>
+            <th>재고수량</th>
+        </tr>
+        <tr>
+            <td><input type="text" name="optionname"></td>
+            <td><input type="number" name="plusprice"></td>
+            <td><input type="number" name="gdsamonut"></td>
+        </tr>
+    </table> <br><br>
+
+    판매마감일 <br>
+    2020-12-31 00:00:00 일까지<br><br>
+
+    썸네일 이미지 추가
+    <button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    <br><br>
+
+    상세설명 이미지 추가
+    <button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    <br><br>
+
+    노출여부
+    <input type="radio" name="appeared" checked="checked"> 노출
+    <input type="radio" name="disappeared"> 비노출 <br><br><br>
+
+    <button>상품등록</button>
+    <button>취소</button>
+
+
+</body></html>

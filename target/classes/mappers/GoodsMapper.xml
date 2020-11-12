@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.goods.repository.IGoodsMapper">
+    
+     <resultMap id="GoodsMap" type="com.fw.shopping.goods.model.GoodsVO">
+			<id property="gdsNo" column="gds_no"/>		
+			<result property="cateNo" column="cate_no"/>
+			<result property="gdsName" column="gds_name"/>
+			<result property="gdsDes" column="gds_des"/>
+			<result property="gdsThumbImg" column="gds_thumb_img"/>
+			<result property="gdsRegDate" column="gds_reg_date"/>
+			<result property="gdsDday" column="gds_dday"/>
+			<result property="gdsType" column="gds_status"/>
+			<result property="gdsSales" column="gds_status"/>
+			<result property="gdsStatus" column="gds_status"/>
+			<result property="gdsViewCnt" column="gds_view_cnt"/>
+			<result property="gdsLimit" column="gds_limit"/>
+			<result property="gdsPrice" column="gds_price"/>
+			<result property="gdsDiscount" column="gds_discount"/>
+	</resultMap>
+	
+		<resultMap id="GdsJoinCateMap" type="com.fw.shopping.goods.model.GdsJoinCateVO">
+			<id property="gdsNo" column="gds_no"/>
+			<result property="cateName" column="cate_name"/>
+			<result property="gdsName" column="gds_name"/>
+			<result property="gdsSales" column="gds_sales"/>
+			<result property="gdsRegDate" column="gds_reg_date"/>
+			<result property="gdsDday" column="gds_dday"/>
+			<result property="gdsStatus" column="gds_status"/>
+	</resultMap>
+	
+	<resultMap id="goods" type="com.fw.shopping.goods.model.GoodsVO">
+		<association property="cateNo" column="cate_no" select=""/>
+	
+	</resultMap>
+	
+		<!-- 중복되는 동적 SQL문에 대한 처리 -->
+	<sql id="searching">
+		<!-- 동적 SQL 구문 작성 -->
+		<if test="condition=='sales'">
+			where sales > #{keyword}
+		</if>
+	</sql>
+	
+	<sql id="sorting">
+		<if test="sort=='gdsNoDESC'">
+			ORDER BY gds_no DESC
+		</if>
+	</sql>
+	
+	<!-- admin상품관리목록 -->
+	<select id="getAdminGdsList" resultMap="GdsJoinCateMap">
+		SELECT gds_no, cate_name, gds_name, gds_sales, gds_reg_date, gds_dday, gds_status  
+		FROM goods_tb goods
+		JOIN category_tb category
+		ON goods.cate_no=category.cate_no
+		<!-- <include refid="searching" /> 
+		<include refid="sorting" />
+		 LIMIT #{pageStart}, #{countPerPage}-->
+	</select>
+		
+	<!-- 상품 정보 -->
+	<select id="getGdsInfo" resultMap="GoodsMap">
+		select gds_no, cate_no, gds_type, gds_name, gds_des, gds_thumb_img, gds_reg_date, gds_dday,
+			gds_sales, gds_status, gds_view_cnt, gds_limit, gds_price, gds_discount
+		from goods_tb
+		where gds_no=#{gdsNo}
+	</select>
+	
+	<update id="modifyGoods">
+		UPDATE goods_tb
+		SET cate_no=#{cateNo}, gds_name=#{gdsName}, gds_des=#{gdsDes}, gds_thumb_img=#{gdsThumbImg}, gds_dday=#{gdsDday},
+			gds_limit=#{gdsLimit}, gds_discount=#{gdsDiscount}, gds_price=#{gdsPrice}
+		WHERE gds_no=#{gdsNo}
+	</update>
+	
+	<update id="deleteGoods">
+		UPDATE goods_tb
+        SET gds_status =
+		CASE
+			WHEN gds_status=1 THEN 0
+            WHEN gds_status=0 THEN 1
+		END
+        WHERE gds_no=#{gdsNo};
+	</update>
+	
+	<insert id="addGoods">
+		INSERT INTO goods_tb
+		(cate_no, gds_type, gds_name, gds_des, gds_thumb_img, gds_dday, gds_status,
+			gds_limit, gds_price, gds_discount)
+		VALUES (#{cateNo}, #{gdsType}, #{gdsName}, #{gdsDes}, #{gdsThumbImg}, #{gdsDday}, 
+			#{gdsStatus}, #{gdsLimit}, #{gdsPrice}, #{gdsDiscount})
+	</insert>
+	
+
+	
+
+	
+	<select id="getGoodsList" resultMap="GoodsMap">
+		SELECT *
+		FROM goods_tb
+		LIMIT #{pageStart}, 20
+	</select>
+	
+
+
+	
+
+
+
+</mapper>    

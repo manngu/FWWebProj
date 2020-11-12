@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.order.repository.IOrderMapper">
+    
+    <resultMap id="OrderDetailMap" type="com.fw.shopping.order.model.OrderDetailVO">
+    	<id property="orderDetailNo" column="order_detail_no"/>
+    	<result property="gdsNo" column="gds_no"/>    
+    	<result property="orderId" column="order_id"/>    
+    	<result property="optionNo" column="option_no"/>    
+    	<result property="orderStock" column="order_stock"/>    
+    	<result property="deliveryStatus" column="delivery_status"/>    
+    	<result property="invoiceNo" column="invoice_no"/>
+    	<result property="orderStatus" column="order_status"/>
+    </resultMap>
+    
+    <!-- admin주문관리목록 -->
+    <select id="getAdminOdrList" resultMap="OrderDetailMap">
+    	SELECT order_detail_no, gds_no, order_id, option_no, order_stock, delivery_status, invoice_no, order_status
+    	FROM order_detail_tb
+    	order by order_id
+    </select>
+  
+	<!-- 취소교환환불 승인 -->
+	<update id="admitProb">
+		update order_detail_tb
+		set order_status = order_status + 10
+		where order_detail_no = #{orderDetailNo}
+	</update>
+	
+		<!-- 취소교환환불 거부 -->
+	<update id="rejectProb">
+		update order_detail_tb
+		set order_status = 0
+		where order_detail_no = #{orderDetailNo}
+	</update>
+	
+	<!-- 송장번호 등록 -->
+	<update id="enrollInvoice">
+		update order_detail_tb
+		set invoice_no=200005, delivery_status=4
+		where order_detail_no=#{orderDetailNo}	
+	</update>
+	
+
+
+
+</mapper>    

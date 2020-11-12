@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.option.repository.IOptionMapper">
+    
+         <resultMap id="OptJoinGdsMap" type="com.fw.shopping.goods.model.GdsJoinVO">
+			<id property="gdsNo" column="gds_no"/>
+			<result property="cateNo" column="cate_no"/>
+			<result property="gdsName" column="gds_name"/>
+			<result property="gdsDes" column="gds_des"/>
+			<result property="gdsThumbImg" column="gds_thumb_img"/>
+			<result property="gdsRegDate" column="gds_dday"/>
+			<result property="gdsDday" column="gds_dday"/>
+			<result property="gdsType" column="gds_status"/>
+			<result property="gdsSales" column="gds_status"/>
+			<result property="gdsStatus" column="gds_status"/>
+			<result property="gdsViewCnt" column="gds_view_cnt"/>
+			<result property="gdsLimit" column="gds_limit"/>
+			<result property="gdsPrice" column="gds_price"/>
+			<result property="gdsDiscount" column="gds_discount"/>
+			<result property="optionNo" column="option_no"/>
+			<result property="optionName" column="option_name"/>
+			<result property="optionCount" column="option_count"/>
+			<result property="optionAddPrice" column="option_add_price"/>
+		</resultMap>
+		
+		
+		<resultMap id="OptionMap" type="com.fw.shopping.option.model.OptionVO">
+			<id property="optionNo" column="option_no"/>
+			<result property="gdsNo" column="gds_no"/>
+			<result property="optionName" column="option_name"/>
+			<result property="optionCount" column="option_count"/>
+			<result property="optionAddPrice" column="option_add_price"/>
+		</resultMap>
+	
+	<select id="getOptionList" resultMap="OptionMap">
+		SELECT option_no, gds_no, option_name, option_count, option_add_price
+		FROM option_tb
+		WHERE gds_no=#{gdsNo}
+	</select>
+	
+	<update id="modifyGdsOpt">
+		UPDATE option_tb
+		SET option_name=#{optionName}, option_count=#{optionCount}, option_add_price=#{optionAddPrice}
+		WHERE option_no=#{optionNo}
+	</update>
+	
+	
+	
+	
+    
+    
+	<insert id="addGdsOpt">
+		INSERT INTO option_tb (gds_no, option_name, option_count, option_add_price)
+		values(#{gdsNo}. #{optionName}, #{optionCount}, #{optionAddPrice});
+	</insert>
+		
+
+	
+	<select id="getGdsInfo" resultMap="OptionMap">
+		SELECT *
+		FROM goods_tb
+		JOIN option_tb
+		ON goods_tb.gds_no = option_tb.gds_no
+		WHERE goods_tb.gds_no=#{gdsNo}
+	</select>
+	
+
+		
+</mapper>    
