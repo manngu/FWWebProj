@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.review.repository.IReviewMapper">
+ 
+ 	<resultMap id="ReviewMap" type="com.fw.shopping.review.model.ReviewVO">
+ 		<id property="reviewNo" column="review_no"/>
+ 		<result property="gdsNo" column="gds_no"/>
+ 		<result property="orderId" column="order_id"/>
+ 		<result property="userNo" column="user_no"/>
+ 		<result property="reviewRef" column="review_ref"/>
+ 		<result property="reviewImg" column="review_img"/>
+ 		<result property="reviewContent" column="review_content"/>
+ 		<result property="reviewStars" column="review_stars"/> 	
+ 		<result property="reviewRegDate" column="review_reg_date"/>
+ 	</resultMap>
+
+
+	<!-- 관리자가 댓글을 달아야 할 리뷰 목록 -->
+	<select id="getAdminReviewList" resultMap="ReviewMap">
+		select review_no, gds_no, user_no, review_reg_date
+		from review_tb
+		where review_no
+			not in (
+				select a.review_no
+				from review_tb a
+				join review_tb b
+				where a.review_no=b.review_ref)
+		and review_ref is null
+	</select>
+
+
+
+</mapper>

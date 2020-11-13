@@ -4,12 +4,14 @@ public class SearchVO extends PageVO{//페이징(기본)+검색
 	
 	private String keyword;	//검색어
 	private String condition;
+	private String sort;	//분류/정렬
 	//회원용 - 상품이름
 	//관리자 - 거래일, 거래구분, 상품번호, 옵션번호, 주문번호, 매출액	
 	
 	public SearchVO() {
 		this.keyword = "";
 		this.condition = "";
+		this.sort="";
 	}
 	
 	
@@ -26,4 +28,15 @@ public class SearchVO extends PageVO{//페이징(기본)+검색
 		this.condition = condition;
 	}
 
+
+	public String getSort() {
+		return sort;
+	}
+
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	
+	
 }

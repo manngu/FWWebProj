@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.order.model.OrderDetailVO;
 import com.fw.shopping.order.model.OrderVO;
 import com.fw.shopping.order.repository.IOrderMapper;
@@ -17,10 +19,15 @@ public class OrderService implements IOrderService {
 	IOrderMapper mapper;
 
 	@Override
-	public List<OrderDetailVO> getAdminOdrList() {
-		return mapper.getAdminOdrList();
+	public List<OrderDetailVO> getAdminOdrList(SearchVO search) {
+		return mapper.getAdminOdrList(search);
 	}
+	
 
+	@Override
+	public int countOrders(SearchVO search) {
+		return mapper.countOrders(search);
+	}
 
 	@Override
 	public void admitProb(int orderDetailNo) {
@@ -38,7 +45,12 @@ public class OrderService implements IOrderService {
 		mapper.enrollInvoice(orderDetailNo, invoiceNo);
 		
 	}
-
+	
+	@Override
+	public void deliverComplete(int orderDetailNo) {
+		mapper.deliverComplete(orderDetailNo);
+		
+	}
 	
 	
 

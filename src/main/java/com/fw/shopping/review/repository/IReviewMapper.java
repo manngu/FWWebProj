@@ -6,6 +6,9 @@ import com.fw.shopping.commons.SortVO;
 import com.fw.shopping.review.model.ReviewVO;
 
 public interface IReviewMapper {
+	
+	List<ReviewVO> getAdminReviewList();
+	
 
 	List<ReviewVO> getReviewList(int gdsNo, SortVO sort);
 	

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.fw.shopping.qna.repository.IQnaMapper">
+ 
+ 	<resultMap id="QnaMap" type="com.fw.shopping.qna.model.QnaVO">
+ 			<id property="qnaNo"  column="qna_no" />
+ 			<result property="gdsNo" column="gds_no"/>
+ 			<result property="userNo" column="user_no"/>
+ 			<result property="qnaRef" column="qna_ref"/>
+ 			<result property="qnaStatus" column="qna_status"/>
+ 			<result property="qnaTitle" column="qna_title"/>
+ 			<result property="qnaContent" column="qna_content"/>
+ 			<result property="qnaRegDate" column="qna_reg_date"/>
+ 	</resultMap>
+
+	<!-- 관리자가 댓글을 달아야 할 qna 목록 -->
+	<select id="getAdminQnaList" resultMap="QnaMap">
+		select qna_no, gds_no, user_no, qna_ref, qna_status, qna_title, qna_content, qna_reg_date
+		from qna_tb
+		where qna_no
+			not in (
+				select a.qna_no
+				from qna_tb a
+				join qna_tb b
+				where a.qna_no=b.qna_ref)
+		and qna_ref is null
+	</select>
+
+	<!-- qna 게시글 정보 -->
+	<select id="getQnaInfo" resultMap="QnaMap">
+		select *
+		from qna_tb
+		where qna_no=#{qnaNo}
+	</select>
+
+
+
+</mapper>

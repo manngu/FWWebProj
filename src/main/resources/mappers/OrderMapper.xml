@@ -15,11 +15,48 @@
     	<result property="orderStatus" column="order_status"/>
     </resultMap>
     
+	<!-- 중복되는 동적 SQL문에 대한 처리 -->
+	<sql id="search">
+		<!-- 동적 SQL 구문 작성 -->
+		
+		<!-- 취소요청 -->
+		<if test="sort=='cancel'">
+			where order_status=1
+		</if>
+		
+		<!-- 교환요청 -->
+		<if test="sort=='change'">
+			where order_status=2
+		</if>
+		
+		<!-- 환불요청 -->
+		<if test="sort=='refund'">
+			where order_status=3
+		</if>
+		
+		
+	</sql>
+    
     <!-- admin주문관리목록 -->
     <select id="getAdminOdrList" resultMap="OrderDetailMap">
     	SELECT order_detail_no, gds_no, order_id, option_no, order_stock, delivery_status, invoice_no, order_status
     	FROM order_detail_tb
+    	<include refid="search"/>
     	order by order_id
+    	limit #{pageStart}, #{countPerPage}
+    </select>
+    
+
+    
+    
+    
+    
+    
+    <!-- 주문 count -->
+    <select id="countOrders" resultType="int">
+    	select count(*)
+    	from order_detail_tb
+    	<include refid="search"/>
     </select>
   
 	<!-- 취소교환환불 승인 -->
@@ -43,6 +80,12 @@
 		where order_detail_no=#{orderDetailNo}	
 	</update>
 	
+	<!-- 배송완료 등록 -->
+	<update id="deliverComplete">
+		update order_detail_tb
+		set delivery_status=5
+		where order_detail_no=#{orderDetailNo}
+	</update>
 
 
 

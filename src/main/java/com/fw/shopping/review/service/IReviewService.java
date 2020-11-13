@@ -7,6 +7,11 @@ import com.fw.shopping.review.model.ReviewVO;
 
 public interface IReviewService {
 
+	List<ReviewVO> getAdminReviewList();
+	
+	
+	
+	
 	List<ReviewVO> getReviewList(int gdsNo, SortVO sort);
 	
 	ReviewVO getReviewInfo(int reviewNo);

@@ -15,9 +15,11 @@
 	<a href="<c:url value='/admin/categories'/>">카테고리 관리</a> <br>
 	<a href="<c:url value='/admin/goods'/>">상품관리</a> <br>
 	<a href="<c:url value='/admin/orders'/>">주문관리</a> <br>
+	<a href="<c:url value='/admin/reviews'/>">리뷰관리</a> <br>
+	<a href="<c:url value='/admin/qnas'/>">qna관리</a> <br>
+	<a href="<c:url value='/admin/reviews'/>">리뷰관리</a> <br>
 	
-	
-	<!-- 주문관리, faq/notice 등록, 리뷰/qna 관리 -->
+	<!-- faq/notice 등록,-->
 	
 
 </body>

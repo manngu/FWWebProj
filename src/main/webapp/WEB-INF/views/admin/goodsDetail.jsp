@@ -20,8 +20,8 @@
 <tr> <td>상품번호</td> <td> ${gds.gdsNo}</td>
 <tr> <td>카테고리번호</td> <td><input name="cateNo" value="${gds.cateNo}" ${check=="수정"?'':'readonly'}></td>
 <tr> <td>상품이름</td> <td><input name="gdsName" value="${gds.gdsName}" ${check=="수정"?'':'readonly'}></td>
-<tr> <td>상품상세</td> <td><input name="gdsDes" value="${gds.gdsDes}" ${check=="수정"?'':'readonly'}></td>
-<tr> <td>상품썸네일</td> <td><input name="gdsThumbImg" value="${gds.gdsThumbImg}" ${check=="수정"?'':'readonly'}></td>
+<tr> <td>상품상세</td> <td><img src="${pageContext.request.contextPath}${gds.gdsDes}" style="width:150px"></td>
+<tr> <td>상품썸네일</td> <td><img src="${pageContext.request.contextPath}${gds.gdsThumbImg}" style="width:150px"></td>
 <tr> <td>상품등록일</td> <td>${gds.gdsRegDate}</td>
 <tr> <td>상품마감일</td> <td><input name="gdsDday" value="${gds.gdsDday}" ${check=="수정"?'':'readonly'}></td>
 <tr> <td>상품기본가격</td> <td><input name="gdsPrice" value="${gds.gdsPrice}" ${check=="수정"?'':'readonly'}></td>

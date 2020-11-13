@@ -4,22 +4,22 @@ import java.util.Date;
 
 public class ReviewVO {
 	
-	private Integer ReviewNo; // pk
+	private Integer reviewNo; // pk
 	private Integer gdsNo;
 	private String orderId;
 	private Integer userNo;
-	private Integer ReviewRef;
-	private String ReviewImg;
-	private String ReviewContent;
-	private Integer ReviewStars;
-	private Integer ReviewLike;
-	private Date ReviewRegDate;
-
+	private Integer reviewRef;
+	private String reviewImg;
+	private String reviewContent;
+	private Integer reviewStars;
+	private Date reviewRegDate;
+	
+	
 	public Integer getReviewNo() {
-		return ReviewNo;
+		return reviewNo;
 	}
 	public void setReviewNo(Integer reviewNo) {
-		ReviewNo = reviewNo;
+		this.reviewNo = reviewNo;
 	}
 	public Integer getGdsNo() {
 		return gdsNo;
@@ -40,49 +40,43 @@ public class ReviewVO {
 		this.userNo = userNo;
 	}
 	public Integer getReviewRef() {
-		return ReviewRef;
+		return reviewRef;
 	}
 	public void setReviewRef(Integer reviewRef) {
-		ReviewRef = reviewRef;
+		this.reviewRef = reviewRef;
 	}
 	public String getReviewImg() {
-		return ReviewImg;
+		return reviewImg;
 	}
 	public void setReviewImg(String reviewImg) {
-		ReviewImg = reviewImg;
+		this.reviewImg = reviewImg;
 	}
 	public String getReviewContent() {
-		return ReviewContent;
+		return reviewContent;
 	}
 	public void setReviewContent(String reviewContent) {
-		ReviewContent = reviewContent;
+		this.reviewContent = reviewContent;
 	}
 	public Integer getReviewStars() {
-		return ReviewStars;
+		return reviewStars;
 	}
 	public void setReviewStars(Integer reviewStars) {
-		ReviewStars = reviewStars;
-	}
-	public Integer getReviewLike() {
-		return ReviewLike;
-	}
-	public void setReviewLike(Integer reviewLike) {
-		ReviewLike = reviewLike;
+		this.reviewStars = reviewStars;
 	}
 	public Date getReviewRegDate() {
-		return ReviewRegDate;
+		return reviewRegDate;
 	}
 	public void setReviewRegDate(Date reviewRegDate) {
-		ReviewRegDate = reviewRegDate;
+		this.reviewRegDate = reviewRegDate;
 	}
-
 	@Override
 	public String toString() {
-		return "ReviewVO [ReviewNo=" + ReviewNo + ", gdsNo=" + gdsNo + ", orderId=" + orderId + ", userNo=" + userNo
-				+ ", ReviewRef=" + ReviewRef + ", ReviewImg=" + ReviewImg + ", ReviewContent=" + ReviewContent
-				+ ", ReviewStars=" + ReviewStars + ", ReviewLike=" + ReviewLike + ", ReviewRegDate=" + ReviewRegDate
-				+ "]";
+		return "ReviewVO [reviewNo=" + reviewNo + ", gdsNo=" + gdsNo + ", orderId=" + orderId + ", userNo=" + userNo
+				+ ", reviewRef=" + reviewRef + ", reviewImg=" + reviewImg + ", reviewContent=" + reviewContent
+				+ ", reviewStars=" + reviewStars + ", reviewRegDate=" + reviewRegDate + "]";
 	}
+	
+	
 	
 	
 

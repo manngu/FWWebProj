@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fw.shopping.commons.PageCreator;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.order.model.OrderDetailVO;
 import com.fw.shopping.order.service.IOrderService;
 
@@ -26,17 +28,42 @@ public class AdminOdrController {
 	
 	//주문 리스트 조회
 	@GetMapping
-	public String orderMain(Model model) {
-		List<OrderDetailVO> list = odrService.getAdminOdrList();
-		model.addAttribute("list", list);
+	public String orderMain(Model model,SearchVO search) {
+		
+		PageCreator pc = new PageCreator();
+		pc.setPaging(search);
+		
+		//System.out.println(pc.getPaging().getPage());
+		//System.out.println(pc.getEndPage());
+		//System.out.println(pc.getBeginPage());
+
+		List<OrderDetailVO> list = odrService.getAdminOdrList(search);
+		pc.setTotalCount(odrService.countOrders(search));
+				
+		model.addAttribute("list", list)
+			.addAttribute("pc", pc);
 		return "admin/adminOrderMain";
 	}
 	
 	//취소/교환/환불 리스트
 	@GetMapping("/problems")
-	public String problemList(Model model) {
-		List<OrderDetailVO> list = odrService.getAdminOdrList();
-		model.addAttribute("list", list);
+	public String problemList(Model model,SearchVO search) {
+		
+		
+		PageCreator pc = new PageCreator();
+		pc.setPaging(search);
+		
+		//System.out.println(pc.getPaging().getPage());
+		//System.out.println(pc.getBeginPage());
+		System.out.println("sort:" + search.getSort());
+		
+		
+		List<OrderDetailVO> list = odrService.getAdminOdrList(search);
+		pc.setTotalCount(odrService.countOrders(search));
+		
+		model.addAttribute("list", list)
+			.addAttribute("pc",pc)
+			.addAttribute("sort", search.getSort());
 		
 		return "admin/odrProbList";
 	}
@@ -68,6 +95,24 @@ public class AdminOdrController {
 		return "redirect:/admin/orders";
 		
 	}
+	
+	//배송완료 입력 페이지
+	@GetMapping("/deliveries")
+	public String deliverCmpl(Model model,SearchVO search) {
+		List<OrderDetailVO> list = odrService.getAdminOdrList(search);
+		model.addAttribute("list", list);
+		return "/admin/deliverCmpl";
+	}
+	
+	//배송완료
+	@GetMapping("/deliveries/{orderDetailNo}")
+	public String deliverCompl(@PathVariable("orderDetailNo") int orderDetailNo) {
+		odrService.deliverComplete(orderDetailNo);		
+		
+		return "redirect:/admin/orders/deliveries";
+	}
+
+	
 	
 	
 }

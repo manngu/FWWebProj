@@ -1,31 +1,27 @@
 package com.fw.shopping.commons;
 
 public class PageVO {
+
 	private int page;	//사용자가 요청한 페이지 번호
 	private int countPerPage;	//한페이지당 들어갈 게시물의 수.
 	
-	
 	public PageVO() {
-		this.page = 1;
-		this.countPerPage = 20;
+		this.page=1;
+		this.countPerPage=20;
 	}
 	
-	//요청 페이지의 시작 인덱스
-	public int getPageStart() { 
-		return(this.page-1)*this.countPerPage+1;
+
+	public int getPageStart() {
+		//[1]0-19, [2]20-39 [3]40-59 ... [n](n-1)*20
+		return(this.page-1)*this.countPerPage;
 	}
-	
-	//요청 페이지의 끝 인덱스
-	public int getPageEnd() {
-		return this.page*this.countPerPage;
-	}
-	
 	
 	public int getPage() {
 		return page;
 	}
+	
 	public void setPage(int page) {
-		if(page<=0) {
+		if(page<=0) {	
 			this.page = 1;
 			return;
 		}
@@ -35,10 +31,12 @@ public class PageVO {
 		return countPerPage;
 	}
 	public void setCountPerPage(int countPerPage) {
-		if(countPerPage<=0 || countPerPage > 30) {	
-			this.countPerPage=10;
+		if(countPerPage<=0 || countPerPage > 50) {	//50은 자기 취향. 몇개 이상 보여주기 싫은지
+			this.countPerPage=20;
 			return;
 		}
 		this.countPerPage = countPerPage;
 	}
+	
+	
 }

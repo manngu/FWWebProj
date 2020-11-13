@@ -7,6 +7,20 @@ import com.fw.shopping.order.model.OrderDetailVO;
 import com.fw.shopping.order.model.OrderVO;
 
 public interface IOrderDetailMapper  {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	//결제 api로 넘기기 위한 객체 생성
 	void addOdrDetail(OrderDetailVO od);

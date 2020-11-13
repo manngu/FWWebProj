@@ -8,12 +8,13 @@
 <title>주문관리 페이지</title>
 </head>
 <body>
+
 <h1>주문관리 페이지</h1>
 
 <a href="<c:url value='/admin'/>">관리자메인 페이지로</a> <br>
 <a href="<c:url value='/admin/orders/problems'/>">취소/교환/환불처리</a> <br>
 <a href="<c:url value='/admin/orders/invoice'/>">송장번호 등록</a> <br>
-<a href="<c:url value='/admin/orders/delieveries'/>">배송완료 등록</a> <br>
+<a href="<c:url value='/admin/orders/deliveries'/>">배송완료 등록</a> <br>
 
 <table border="1" style="border-collapse:collapse;">
 <tr>
@@ -33,9 +34,32 @@
 </tr>
 
 </c:forEach>
-
-
 </table>
+
+			<!-- 페이징 처리 부분  -->
+
+					<!-- 이전버튼 -->
+					<c:if test="${pc.prev}">
+						<a href="<c:url value='/admin/orders${pc.makeURI(pc.beginPage-1)}'/>">이전</a> 
+					</c:if>
+
+
+					<!-- 페이지 버튼 -->
+					<c:forEach var="pageNum" begin="${pc.beginPage}" end="${pc.endPage}">
+						<a href="<c:url value='/admin/orders${pc.makeURI(pageNum)}'/>"
+							style="${(pc.paging.page == pageNum) ? 'font-weight:bold' : '' }">${pageNum}</a>
+					</c:forEach>
+
+					<!-- 다음 버튼 -->
+					<c:if test="${pc.next}">
+						<a href="<c:url value='/admin/orders${pc.makeURI(pc.endPage+1)}'/>">다음</a>
+					</c:if>
+
+			<!-- 페이징 처리 끝 -->
+
+
+
+
 
 </body>
 </html>
