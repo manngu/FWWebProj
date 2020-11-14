@@ -30,7 +30,7 @@
 		WHERE cart_no=#{cartNo}
 	</update>
 	
-	<select id="getCartList" resultMap="cartMap">
+	<select id="getCartList" resultMap="CartMap">
 		SELECT goods.gds_name, option.option_name, cart.cart_stock, cart.cart_reg_date
 		FROM cart_tb cart
 		LEFT OUTER JOIN goods_tb goods ON cart.gds_no=goods.gds_no

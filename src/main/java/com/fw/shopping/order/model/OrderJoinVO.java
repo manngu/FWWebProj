@@ -2,7 +2,7 @@ package com.fw.shopping.order.model;
 
 import java.util.Date;
 
-public class OrderJoin {
+public class OrderJoinVO {
 
 	private String orderId; // pk
 	private Integer userNo;
@@ -19,6 +19,7 @@ public class OrderJoin {
 	private Integer deliveryStatus;
 	private Long invoiceNo;
 	private Integer orderStatus;
+	private Integer orderDetPrice;
 	
 	
 	public String getOrderId() {
@@ -112,6 +113,14 @@ public class OrderJoin {
 		this.orderStatus = orderStatus;
 	}
 
+	public Integer getOrderDetPrice() {
+		return orderDetPrice;
+	}
+	public void setOrderDetPrice(Integer orderDetPrice) {
+		this.orderDetPrice = orderDetPrice;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "OrderJoin [orderId=" + orderId + ", userNo=" + userNo + ", orderPerson=" + orderPerson + ", orderAddr1="

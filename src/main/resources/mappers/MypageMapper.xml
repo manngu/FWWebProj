@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.fw.shopping.mypage.repository.IMypageMapper">    
+    
+	<resultMap id="MypageMap" type="com.fw.shopping.mypage.model.MypageVO">
+		<id property="userNo" column="user_no" />
+		<result property="qnaNo" column="qna_no" />
+		<result property="qnaTitle" column="qna_title" />
+		<result property="qnaContent" column="qna_content" />
+		<result property="reviewNo" column="review_no" />
+		<result property="reviewTitle" column="review_title" />
+		<result property="reviewContent" column="review_content" />
+		<result property="reviewStars" column="review_stars" />
+		<result property="reviewLike" column="review_like" />
+		<result property="orderRegDate" column="review_content" />
+		<result property="orderId" column="order_id" />
+		<result property="gdsName" column="gds_name" />
+		<result property="optionName" column="option_name" />
+		<result property="orderStatus" column="order_status" />
+		<result property="deliveryStatus" column="delivery_status" />
+		<result property="orderDetailsNo" column="order_detail_no" />
+		<result property="invoiceNo" column="invoice_no" />
+		<result property="orderStock" column="order_stock" />
+	</resultMap>
+	
+	
+	<select id="getReviewList" resultMap="MypageMap">
+		SELECT goods.gds_name, member.user_no, review.review_title
+		FROM review_tb review
+		LEFT OUTER JOIN goods_tb goods ON goods.gds_no=review.gds_no
+		LEFT OUTER JOIN member_tb user ON user.user_no=review.user_no
+		WHERE review.user_no=#{userNo}
+	</select>
+
+	<select id="getReviewOne" resultMap="MypageMap">
+		SELECT *
+		FROM review_tb
+		WHERE review_no=#{reviewNo}
+	</select>
+
+	<select id="getQnaList" resultMap="MypageMap">
+		SELECT goods.gds_name, member.user_no, qna.qna_title
+		FROM qna_tb qna
+		LEFT OUTER JOIN goods_tb goods ON goods.gds_no=qna.gds_no
+		LEFT OUTER JOIN member_tb user ON user.user_no=qna.user_no
+		WHERE qna.user_no=#{userNo}
+	</select>
+
+	<select id="getQnaOne" resultMap="MypageMap">
+		SELECT *
+		FROM qna_tb
+		WHERE qna_no=#{qnaNo}
+	</select>
+
+	<select id="getOrderDetailList" resultMap="MypageMap">
+		SELECT *
+		FROM order_detail_tb detail
+		LEFT OUTER JOIN goods_tb goods ON goods.gds_no=detail.gds_no
+		LEFT OUTER JOIN order_tb order ON order.order_id=detail.order_id
+		WHERE detail.order_detail_no=#{orderDetailsNo}
+	</select>
+
+	<update id="orderStatus">
+		UPDATE order_detail_tb
+		SET order_status=#{orderStatus}
+		WHERE order_detail_no=#{orderDetailsNo}
+	</update>
+	
+</mapper>

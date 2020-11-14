@@ -7,16 +7,24 @@ import com.fw.shopping.review.model.ReviewVO;
 
 public interface IReviewMapper {
 
-	List<ReviewVO> getReviewList(int gdsNo, SortingVO sort);
+	List<ReviewVO> getReviewList(int gdsNo); // 리뷰 리스트 가져오기
+
+	List<ReviewVO> getReReviewList(int gdsNo); // 리뷰 댓글 리스트 가져오기
 	
-	ReviewVO getReviewInfo(int reviewNo);
+	List<ReviewVO> getMyReviewList(int userNo); // 본인 리뷰 리스트 가져오기
 	
-	void addReply(int reviewRef, ReviewVO review); 
+	ReviewVO getReviewInfo(int reviewNo); //내가 쓴 리뷰 보기
 	
-	void modifyReply(ReviewVO review);
+	void addReview(ReviewVO review); //리뷰 추가
 	
-	void deleteReview(int reviewNo); //회원 리뷰
+	void addReReview(ReviewVO review); //리뷰 댓글 추가
 	
-	void deleteReply(int reviewNo);   //관리자 대댓
+	void modifyReview(ReviewVO review); //리뷰 수정하기
+	
+	void modifyReReview(ReviewVO review); // 리뷰 댓글 수정하기
+	
+	void deleteReview(int reviewNo); //본인 리뷰 삭제
+	
+	void deleteReply(int reviewNo);   //관리자 대댓??
 
 }

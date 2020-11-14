@@ -67,7 +67,7 @@ public class NoticeController {
 			System.out.println("parameter(글 번호): " + noticeNo);
 			NoticeVO vo = noticeService.getNoticeInfo(noticeNo);
 			System.out.println("Result Data: " + vo);
-			model.addAttribute("noticeInfo", vo);
+			model.addAttribute("notice", vo);
 			return "notice/content";
 		}
 
@@ -88,12 +88,11 @@ public class NoticeController {
 		
 		//게시물 수정 페이지 요청
 		@GetMapping("/modify")
-		public String modify(Integer noticeNo, Model model
+		public String modify(NoticeVO notice, Model model
 				, @ModelAttribute("p") PageVO paging) {
 			System.out.println("URL: /notice/modify => GET");
-			System.out.println("parameter(글 번호): " + noticeNo);
-			
-			NoticeVO vo = noticeService.getNoticeInfo(noticeNo);
+			System.out.println("parameter(글 번호): " + notice.getNoticeNo());			
+			NoticeVO vo = noticeService.getNoticeInfo(notice.getNoticeNo());
 			System.out.println("Result Data: " + vo);
 			model.addAttribute("noticeInfo", vo);
 			

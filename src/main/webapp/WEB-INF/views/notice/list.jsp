@@ -9,7 +9,7 @@
 <br><br> 
  
     <!-- Begin Page Content -->
-<h2>FAQ 게시판</h2>	
+<h2>notice 게시판</h2>	
 
 	<style>
 	#container_box table td { width:100px; }
@@ -22,7 +22,7 @@
 			</tr>
 		</thead>
 				
-		<c:if test="${faq.size() <= 0}">
+		<c:if test="${notice.size() <= 0}">
 			<tr>
 				<td colspan="5" align="center">
 					<strong>검색 결과가 없습니다!!</strong>
@@ -32,14 +32,14 @@
 
 		<!-- 게시물이 들어갈 공간 -->
 		
-		<c:if test="${faq.size() > 0}">
+		<c:if test="${notice.size() > 0}">
 		
 		<tbody>
-		<c:forEach var="b" items="${faq}" >
+		<c:forEach var="b" items="${notice}" >
 			<tr>
 				<td>
-					<a href="<c:url value='/faq/content/${b.faqNo}?page=${pc.paging.page}&countPerPage=${pc.paging.countPerPage}' />">
-				${b.faqTitle}
+					<a href="<c:url value='/notice/content/${b.noticeNo}?page=${pc.paging.page}&countPerPage=${pc.paging.countPerPage}' />">
+				${b.noticeTitle}
 					</a>
 				</td>
 			</tr>
@@ -54,7 +54,7 @@
                        	<!-- 이전 버튼 -->
                        	<c:if test="${pc.prev}">
 	                       	<li class="page-item">
-								<a class="page-link" href="<c:url value='/faq/list${pc.makeURI(pc.beginPage - 1)}' />" 
+								<a class="page-link" href="<c:url value='/notice/list${pc.makeURI(pc.beginPage - 1)}' />" 
 								style="background-color: #ff52a0; margin-top: 0; height: 40px; color: white; border: 0px solid #f78f24; opacity: 0.8">이전</a>
 							</li>
 						</c:if>
@@ -62,14 +62,14 @@
 						<!-- 페이지 버튼 -->
 						<c:forEach var="pageNum" begin="${pc.beginPage}" end="${pc.endPage}">
 							<li class="page-item">
-							   <a href="<c:url value='/faq/list${pc.makeURI(pageNum)}'/>" class="page-link ${(pc.paging.page == pageNum) ? 'page-active' : ''}" style="margin-top: 0; height: 40px; color: pink; border: 1px solid pink;">${pageNum}</a>
+							   <a href="<c:url value='/notice/list${pc.makeURI(pageNum)}'/>" class="page-link ${(pc.paging.page == pageNum) ? 'page-active' : ''}" style="margin-top: 0; height: 40px; color: pink; border: 1px solid pink;">${pageNum}</a>
 							</li>
 					    </c:forEach>
 					    
 					    <!-- 다음 버튼 -->
 					    <c:if test="${pc.next}">
 						    <li class="page-item">
-						      <a class="page-link" href="<c:url value='/faq/list${pc.makeURI(pc.endPage + 1)}' />" 
+						      <a class="page-link" href="<c:url value='/notice/list${pc.makeURI(pc.endPage + 1)}' />" 
 						      style="background-color: #ff52a0; margin-top: 0; height: 40px; color: white; border: 0px solid #f78f24; opacity: 0.8">다음</a>
 						    </li>
 					    </c:if>
@@ -83,9 +83,9 @@
 						<div class="col-sm-2"></div>
 	                    <div class="form-group col-sm-2">
 	                        <select id="condition" class="form-control" name="condition">                            	
-	                            <option value="title" ${param.condition == 'faqTitle' ? 'selected' : ''}>제목</option>
-	                            <option value="content" ${param.condition == 'faqContent' ? 'selected' : ''}>내용</option>
-	                            <option value="titleContent" ${param.condition == 'faqTitleContent' ? 'selected' : ''}>제목+내용</option>
+	                            <option value="title" ${param.condition == 'noticeTitle' ? 'selected' : ''}>제목</option>
+	                            <option value="content" ${param.condition == 'noticeContent' ? 'selected' : ''}>내용</option>
+	                            <option value="titleContent" ${param.condition == 'noticeTitleContent' ? 'selected' : ''}>제목+내용</option>
 	                        </select>
 	                    </div>
 	                    <div class="form-group col-sm-4">
@@ -97,7 +97,7 @@
 	                        </div>
 	                    </div>
 	                    <div class="col-sm-2">
-							<a href="<c:url value='/faq/write'/>" class="btn float-right">글쓰기</a>
+							<a href="<c:url value='/notice/write'/>" class="btn float-right">글쓰기</a>
 						</div>
 						<div class="col-sm-2"></div>
 					</div>
@@ -128,7 +128,7 @@
 			let count = $(this).val();
 			const keyword = "${param.keyword}";
 			const condition = "${param.condition}";
-			location.href="/faq/list?page=1&countPerPage=" + count 
+			location.href="/notice/list?page=1&countPerPage=" + count 
 							+ "&keyword=" + keyword
 							+ "&condition=" + condition;
 		});
@@ -142,7 +142,7 @@
 			const condition = $("#condition option:selected").val();
 			console.log("검색 조건: " + condition);
 			
-			location.href="/faq/list?keyword="+keyword
+			location.href="/notice/list?keyword="+keyword
 					+"&condition=" + condition;
 			
 		});

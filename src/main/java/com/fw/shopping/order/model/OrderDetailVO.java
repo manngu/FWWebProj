@@ -2,7 +2,7 @@ package com.fw.shopping.order.model;
 
 public class OrderDetailVO {
 	
-	private Integer orderDetailsNo; // pk
+	private Integer orderDetailNo; // pk
 	private Integer gdsNo;
 	private String orderId;
 	private Integer optionNo;
@@ -10,12 +10,11 @@ public class OrderDetailVO {
 	private Integer deliveryStatus;
 	private Long invoiceNo;
 	private Integer orderStatus;
-
-	public Integer getOrderDetailsNo() {
-		return orderDetailsNo;
+	public Integer getOrderDetailNo() {
+		return orderDetailNo;
 	}
-	public void setOrderDetailsNo(Integer orderDetailsNo) {
-		this.orderDetailsNo = orderDetailsNo;
+	public void setOrderDetailNo(Integer orderDetailNo) {
+		this.orderDetailNo = orderDetailNo;
 	}
 	public Integer getGdsNo() {
 		return gdsNo;
@@ -59,10 +58,9 @@ public class OrderDetailVO {
 	public void setOrderStatus(Integer orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-
 	@Override
 	public String toString() {
-		return "OrderDetailVO [orderDetailsNo=" + orderDetailsNo + ", gdsNo=" + gdsNo + ", orderId=" + orderId
+		return "OrderDetailVO [orderDetailNo=" + orderDetailNo + ", gdsNo=" + gdsNo + ", orderId=" + orderId
 				+ ", optionNo=" + optionNo + ", orderStock=" + orderStock + ", deliveryStatus=" + deliveryStatus
 				+ ", invoiceNo=" + invoiceNo + ", orderStatus=" + orderStatus + "]";
 	}

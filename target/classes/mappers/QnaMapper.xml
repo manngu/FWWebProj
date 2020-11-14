@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
- <mapper namespace="com.fw.shopping.qna.repository.ICategoryMapper">
+ <mapper namespace="com.fw.shopping.qna.repository.IQnaMapper">
 
 	<resultMap id="QnaMap" type="com.fw.shopping.qna.model.QnaVO">
 		<id property="qnaNo" column="qna_no"/>
@@ -21,10 +21,16 @@
 			VALUES (#{gdsNo}, #{userNo}, #{qnaStatus}, #{qnaTitle}, #{qnaContent})
 		</insert>
 		
+		<insert id="addReQna">
+			INSERT INTO qna_tb
+			(gds_no, user_no, qna_status, qna_title, qna_ref, qna_content)
+			VALUES (#{gdsNo}, #{userNo}, #{qnaStatus}, #{qnaTitle}, #{qnaRef}, #{qnaContent})
+		</insert>
+		
 		<update id="modifyQna">
 			UPDATE qna_tb
 			SET qna_status=#{qnaStatus}, qna_title=#{qnaTitle}, qna_content=#{qnaContent}
-			WHERE qna_no = #{qnaNo};
+			WHERE qna_no = #{qnaNo}
 		</update>
 		
 		<delete id="deleteQna">
@@ -34,10 +40,14 @@
 		
 		<select id="getQnaList" resultMap="QnaMap">
 			SELECT * FROM qna_tb
-			WHERE gds_no=#{gdsNo}
+			WHERE gds_no=#{gdsNo} and qna_ref is null
 		</select>
 		
-		<select id="showQnaInfo" resultMap="qnaMap">
+		<select id="getReQnaList" resultMap="QnaMap">
+			SELECT * FROM qna_tb
+			WHERE gds_no=#{gdsNo} and qna_ref is not null
+		</select>
+		<select id="showQnaInfo" resultMap="QnaMap">
 			SELECT * FROM qna_tb
 			WHERE qna_no=#{qnaNo}
 		</select>

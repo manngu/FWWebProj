@@ -19,7 +19,6 @@
 	<select id="countNotices" resultType="int">
 		SELECT COUNT(*)
 		FROM notice_tb
-		<include refid="search" />
 	</select>
 	
 	<select id="getNoticeInfo" resultMap="NoticeMap">

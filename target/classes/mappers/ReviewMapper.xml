@@ -13,20 +13,32 @@
 			<result property="reviewImg" column="review_img"/>
 			<result property="reviewContent" column="review_content"/>
 			<result property="reviewStars" column="review_stars"/>
-			<result property="reviewLike" column="review_like"/>
 			<result property="reviewRegDate" column="review_reg_date"/>
 		</resultMap>
 		
 		<insert id="addReview">
 			INSERT INTO review_tb
-			(gds_no, order_id, user_no, review_ref, review_img, review_content, review_stars, review_like)
-			VALUES (#{gdsNo}, #{orderId}, #{userNo}, #{reviewRef}, #{reviewImg}, #{reviewContent}, #{reviewStars}, #{reviewLike})
+			(gds_no, order_id, user_no, review_ref, review_img, review_content, review_stars)
+			VALUES (#{gdsNo}, #{orderId}, #{userNo}, #{reviewRef}, #{reviewImg}, #{reviewContent}, #{reviewStars})
+		</insert>
+		
+		<insert id="addReReview">
+			INSERT INTO review_tb
+			(gds_no, order_id, user_no, review_ref, review_content)
+			VALUES (#{gdsNo}, #{orderId}, #{userNo}, #{reviewRef}, #{reviewContent})
 		</insert>
 		
 		<update id="modifyReview">
 			UPDATE review_tb
 			SET review_img=#{reviewImg}, review_content=#{reviewContent}, review_stars=#{reviewStars}
 			WHERE review_no = #{reviewNo}
+		</update>
+		
+		<update id="modifyReReview">
+			UPDATE review_tb
+			SET review_content=#{reviewContent}
+			WHERE review_no = #{reviewNo}
+		
 		</update>
 		
 		<delete id="deleteReview">
@@ -36,10 +48,15 @@
 		
 		<select id="getReviewList" resultMap="ReviewMap">
 			SELECT * FROM review_tb
-			WHERE gds_no=#{gdsNo}
+			WHERE gds_no=#{gdsNo} and review_ref is null
 		</select>
 		
-		<select id="getReviewInfo" resultMap="reviewMap">
+		<select id="getReReviewList" resultMap="ReviewMap">
+			SELECT * FROM review_tb
+			WHERE gds_no=#{gdsNo} and review_ref is not null
+		</select>
+		
+		<select id="getReviewInfo" resultMap="ReviewMap">
 			SELECT *
 			FROM review_tb
 			WHERE review_no=#{reviewNo}
@@ -50,5 +67,6 @@
 			FROM review_tb
 			WHERE user_no=#{userNo}
 		</select>
+	
 		
 </mapper>    

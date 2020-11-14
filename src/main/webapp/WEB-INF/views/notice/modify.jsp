@@ -12,22 +12,22 @@ header.masthead {
 <div class="container">
 
         <form role="form" method="post">
-          <input type="hidden" name="faqNo" value="${faq.faqNo}">
+          <input type="hidden" name="noticeNo" value="${notice.noticeNo}">
         
            
           <div class="form-group">
             <label>제목</label>
-            <input type="text" class="form-control" name='faqTitle' value="${faq.faqTitle}">
+            <input type="text" class="form-control" name='noticeTitle' value="${notice.noticeTitle}">
           </div>
 
           <div class="form-group">
             <label>내용</label>
-            <textarea class="form-control" rows="5" name='faqContent'>${faq.faqContent}</textarea>
+            <textarea class="form-control" rows="5" name='noticeContent'>${notice.noticeContent}</textarea>
           </div>
 
           
-          <input class="btn" type="submit" value="수정"/>
-          <a class="btn" href="<c:url value='/faq/list'/>">목록</a>&nbsp;&nbsp;
+          <input class="btn" type="submit" value="수정" />
+          <a class="btn" href="<c:url value='/notice/list'/>">목록</a>&nbsp;&nbsp;
           
         </form>
 

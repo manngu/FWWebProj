@@ -67,7 +67,7 @@ public class FaqController {
 		System.out.println("parameter(글 번호): " + faqNo);
 		FaqVO vo = faqService.getFaqInfo(faqNo);
 		System.out.println("Result Data: " + vo);
-		model.addAttribute("faqInfo", vo);
+		model.addAttribute("faq", vo);
 		return "faq/content";
 	}
 
@@ -88,12 +88,11 @@ public class FaqController {
 	
 	//게시물 수정 페이지 요청
 	@GetMapping("/modify")
-	public String modify(Integer faqNo, Model model
+	public String modify(FaqVO faq, Model model
 			, @ModelAttribute("p") PageVO paging) {
 		System.out.println("URL: /faq/modify => GET");
-		System.out.println("parameter(글 번호): " + faqNo);
-		
-		FaqVO vo = faqService.getFaqInfo(faqNo);
+		System.out.println("parameter(글 번호): " + faq.getFaqNo());
+		FaqVO vo = faqService.getFaqInfo(faq.getFaqNo());
 		System.out.println("Result Data: " + vo);
 		model.addAttribute("faqInfo", vo);
 		

@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.fw.shopping.admin.model.SearchVO;
 import com.fw.shopping.order.model.OrderDetailVO;
+import com.fw.shopping.order.model.OrderJoinVO;
 import com.fw.shopping.order.model.OrderVO;
 
-public interface IOrderDetailMapper extends IOrderMapper {
+public interface IOrderDetailMapper {
 
 	//결제 api로 넘기기 위한 객체 생성
 	void addOdrDetail(OrderDetailVO od);
@@ -18,6 +19,8 @@ public interface IOrderDetailMapper extends IOrderMapper {
 	List<OrderVO> getOrderList(int userId);
 
 	List<OrderDetailVO> getOdrDetailList(String orderId);
+
+	List<OrderJoinVO> getUODList(Integer userNo);
 
 	//주문이 완료되면, 상품의 수량을 변경해 
 	int modifyGdsCount(OrderDetailVO od);
@@ -35,5 +38,5 @@ public interface IOrderDetailMapper extends IOrderMapper {
 	OrderVO getOrderInfo(String orderId);
 	
 	//취소/교환/환불처리
-	int checkRequest(OrderDetailVO od, int check); //거부:0, 교환허가:12, 환불허가:13
+	void orderStatus(OrderDetailVO order); //거부:0, 교환허가:12, 환불허가:13
 }

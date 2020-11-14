@@ -4,10 +4,10 @@
     
  <mapper namespace="com.fw.shopping.order.repository.IOrderDetailMapper">
      
-	<resultMap id = "OrderDetailMap" type = "com.fw.shopping.order.model.OrderDetailVO">
+	<resultMap id = "OrderDetailMap" type = "com.fw.shopping.order.model.OrderJoinVO">
 		<id property="orderId" column="order_id"/>
 		<id property="userNo" column="user_no"/>
-		<id property="orderDetailsNo" column="order_detail_no"/>
+		<id property="orderDetailNo" column="order_detail_no"/>
 		<result property="orderPerson" column="order_person"/>
 		<result property="orderAddr1" column="order_addr1"/>
 		<result property="orderAddr2" column="order_add2"/>
@@ -65,11 +65,20 @@
 		SET delivery_status = 5
 		WHERE order_detail_no = #{orderDetailNo}
 	</update>
-
-	<update id="gdsProbProcess">
-		UPDATE order_detail_tb
-		SET order_status = #{orderStatus}
-		WHERE order_detail_no = #{orderDetailNo}
-	</update>
 			
+	<update id="orderStatus">
+		UPDATE order_detail_tb
+		SET order_status=#{orderStatus}
+		WHERE order_detail_no=#{orderDetailNo}
+	</update>
+	
+	<select id="orderDetPrice" resultMap="OrderDetailMap">
+		SELECT od.order_id, od.order_detail_no, od.gds_no, od.option_no, od.order_stock,
+	   	gds.gds_price,opt.option_add_price, od.order_stock*(gds.gds_price+opt.option_add_price) sum
+		FROM order_detail_tb od
+		LEFT OUTER JOIN goods_tb gds ON od.gds_no=gds.gds_no
+		LEFT OUTER JOIN option_tb opt ON od.option_no=opt.option_no
+		WHERE od.order_id={orderDetailNo};
+	</select>
+	
 </mapper>    
