@@ -1,7 +1,9 @@
 package com.fw.shopping.goods.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
+
+import com.fw.shopping.option.model.OptionVO;
 
 public class GoodsVO{
 
@@ -19,6 +21,9 @@ public class GoodsVO{
 	private Integer gdsLimit;
 	private Integer gdsPrice;
 	private double gdsDiscount;
+	private List<OptionVO> list;
+	
+	
 	public Integer getGdsNo() {
 		return gdsNo;
 	}
@@ -49,8 +54,6 @@ public class GoodsVO{
 	public void setGdsThumbImg(String gdsThumbImg) {
 		this.gdsThumbImg = gdsThumbImg;
 	}
-	
-	
 	public Timestamp getGdsRegDate() {
 		return gdsRegDate;
 	}
@@ -105,13 +108,22 @@ public class GoodsVO{
 	public void setGdsDiscount(double gdsDiscount) {
 		this.gdsDiscount = gdsDiscount;
 	}
+	public List<OptionVO> getList() {
+		return list;
+	}
+	public void setList(List<OptionVO> list) {
+		this.list = list;
+	}
 	@Override
 	public String toString() {
 		return "GoodsVO [gdsNo=" + gdsNo + ", cateNo=" + cateNo + ", gdsName=" + gdsName + ", gdsDes=" + gdsDes
 				+ ", gdsThumbImg=" + gdsThumbImg + ", gdsRegDate=" + gdsRegDate + ", gdsDday=" + gdsDday + ", gdsType="
 				+ gdsType + ", gdsSales=" + gdsSales + ", gdsStatus=" + gdsStatus + ", gdsViewCnt=" + gdsViewCnt
-				+ ", gdsLimit=" + gdsLimit + ", gdsPrice=" + gdsPrice + ", gdsDiscount=" + gdsDiscount + "]";
+				+ ", gdsLimit=" + gdsLimit + ", gdsPrice=" + gdsPrice + ", gdsDiscount=" + gdsDiscount + ", list="
+				+ list + "]";
 	}
+
+	
 	
 	
 

@@ -39,6 +39,7 @@
 	<mybatis-spring:scan base-package="com.fw.shopping.order.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.qna.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.review.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.cart.repository"/>
 	
 
 	
