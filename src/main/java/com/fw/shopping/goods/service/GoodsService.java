@@ -2,43 +2,56 @@ package com.fw.shopping.goods.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fw.shopping.admin.model.SearchVO;
-import com.fw.shopping.admin.model.SortingVO;
+import com.fw.shopping.commons.SearchVO;
+import com.fw.shopping.goods.model.GdsJoinCateVO;
 import com.fw.shopping.goods.model.GoodsVO;
+import com.fw.shopping.goods.repository.IGoodsMapper;
 
 @Service
 public class GoodsService implements IGoodsService {
-
+	
+	@Autowired
+	private IGoodsMapper mapper;
+	
 	@Override
-	public void addGoods(GoodsVO gds) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void modifyGoods(GoodsVO gds) {
-		// TODO Auto-generated method stub
-		
+	public List<GdsJoinCateVO> getAdminGdsList() {
+		return mapper.getAdminGdsList();
 	}
 
 	@Override
 	public GoodsVO getGdsInfo(int gdsNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.getGdsInfo(gdsNo);
 	}
 
 	@Override
-	public void deleteGoods(int gdsNo) {
-		// TODO Auto-generated method stub
+	public void modifyGoods(GoodsVO gds) {
+		mapper.modifyGoods(gds);
 		
 	}
+	
+	@Override
+	public void deleteGoods(int gdsNo) {
+		mapper.deleteGoods(gdsNo);
+		
+	}
+	
 
 	@Override
-	public List<GoodsVO> getGoodsList(SearchVO search, SortingVO sort) {
-		// TODO Auto-generated method stub
-		return null;
+	public void addGoods(GoodsVO gds) {
+		mapper.addGoods(gds);
+	}
+	
+	@Override
+	public int getNewGdsInfo() {
+		return mapper.getNewGdsInfo();
+	}
+	
+	@Override
+	public List<GoodsVO> getGoodsList(int gdsType) {
+		return mapper.getGoodsList(gdsType);
 	}
 
 }

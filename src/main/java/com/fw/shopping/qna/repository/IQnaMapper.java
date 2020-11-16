@@ -11,6 +11,8 @@ public interface IQnaMapper {
 	List<QnaVO> getReQnaList(int gdsNo);
 	
 	List<QnaVO> getMyQnaList(int userNo);
+	
+	List<QnaVO> getMyReQnaList(int qnaNo);
 		
 	QnaVO getQnaInfo(int qnaNo);
 	
@@ -21,5 +23,8 @@ public interface IQnaMapper {
 	void modifyQna(QnaVO qna);
 	
 	void deleteQna(int qnaNo);
+	
+	String getMemberName(int reviewNo);
 
+	List<QnaVO> getAdminQnaList(); //관리자가 확인해야할 qna리스트
 }

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fw.shopping.admin.model.PageCreator;
-import com.fw.shopping.admin.model.PageVO;
-import com.fw.shopping.admin.model.SearchVO;
+import com.fw.shopping.commons.PageCreator;
+import com.fw.shopping.commons.PageVO;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.notice.model.NoticeVO;
 import com.fw.shopping.notice.service.INoticeService;
 
@@ -51,7 +51,7 @@ public class NoticeController {
 			pc.setPaging(search);
 			
 			List<NoticeVO> noticeList = noticeService.getNoticeList(search);
-			pc.setArticleTotalCount(noticeService.countNotices(search));
+			pc.setTotalCount(noticeService.countNotices(search));
 		
 			model.addAttribute("notice", noticeList);
 			model.addAttribute("pc", pc);

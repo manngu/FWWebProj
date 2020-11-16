@@ -2,7 +2,7 @@ package com.fw.shopping.order.service;
 
 import java.util.List;
 
-import com.fw.shopping.admin.model.SearchVO;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.order.model.OrderDetailVO;
 import com.fw.shopping.order.model.OrderJoinVO;
 import com.fw.shopping.order.model.OrderVO;
@@ -24,13 +24,7 @@ public interface IOrderDetailService{
 
 	//주문이 완료되면, 상품의 수량을 변경해 
 	int modifyGdsCount(OrderDetailVO od);
-	
-	//송장번호 등록
-	int enrollInvoiceNo(String orderId, String gdsName, String Invoice);
-	
-	//배송완료
-	int deliveryComplete();
-	
+
 	//주문 리스트 조회
 	List<OrderVO> getOrderList(SearchVO search);
 	
@@ -39,4 +33,24 @@ public interface IOrderDetailService{
 	
 	//취소/교환/환불처리
 	void orderStatus(OrderDetailVO order); //거부:0, 교환허가:12, 환불허가:13
+	
+	///////관리자///////
+	//admin주문리스트
+	List<OrderDetailVO> getAdminOdrList(SearchVO search);	
+	
+	//주문 개수
+	int countOrders(SearchVO search);
+	
+	//취소/교환/환불 승인
+	void admitProb(int orderDetailNo);
+	
+	//취소/교환/환불 거부
+	void rejectProb(int orderDetailNo);
+	
+	//송장번호 등록
+	void enrollInvoice(int orderDetailNo, int invoiceNo);
+	
+	//배송완료 등록
+	void deliverComplete(int orderDetailNo);
+	////////////
 }

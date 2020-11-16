@@ -37,8 +37,8 @@
 		<c:forEach var="b" items="${review}" >
 			<tr>
 				<td>
-					<a href="<c:url value='/review/reviewCon/${b.reviewNo}' />">
-				${b.reviewTitle}
+					<a href="<c:url value='/mypage/reviewCon/${b.reviewNo}' />">
+				${b.reviewContent}
 					</a>
 				</td>
 			</tr>

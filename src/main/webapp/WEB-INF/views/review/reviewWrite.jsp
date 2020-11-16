@@ -20,7 +20,8 @@
 	    
 	    <!-- 임의로 추가함 -->
 	    <input type="hidden" name="gdsNo" value="1023">
-	    <input type="hidden" name="userNo" value="44">
+	    <input type="hidden" name="userNo" value="${user.userNo}">
+	    <input type="hidden" name="userName" value="${user.userName}">
 	    <input type="hidden" name="orderId" value="2027">
 	    
 	    <h3>만족도 </h3> 

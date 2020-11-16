@@ -4,7 +4,7 @@
     
  <mapper namespace="com.fw.shopping.order.repository.IOrderDetailMapper">
      
-	<resultMap id = "OrderDetailMap" type = "com.fw.shopping.order.model.OrderJoinVO">
+	<resultMap id = "OdJoinMap" type = "com.fw.shopping.order.model.OrderJoinVO">
 		<id property="orderId" column="order_id"/>
 		<id property="userNo" column="user_no"/>
 		<id property="orderDetailNo" column="order_detail_no"/>
@@ -22,6 +22,41 @@
 		<result property="orderStatus" column="order_status"/>
 	</resultMap>
 	
+	 <resultMap id="OrderDetailMap" type="com.fw.shopping.order.model.OrderDetailVO">
+    	<id property="orderDetailNo" column="order_detail_no"/>
+    	<result property="gdsNo" column="gds_no"/>    
+    	<result property="orderId" column="order_id"/>    
+    	<result property="optionNo" column="option_no"/>    
+    	<result property="orderStock" column="order_stock"/>    
+    	<result property="deliveryStatus" column="delivery_status"/>    
+    	<result property="invoiceNo" column="invoice_no"/>
+    	<result property="orderStatus" column="order_status"/>
+    </resultMap>
+	
+
+	<!-- 중복되는 동적 SQL문에 대한 처리 -->
+	<sql id="search">
+		<!-- 동적 SQL 구문 작성 -->
+		
+		<!-- 취소요청 -->
+		<if test="sort=='cancel'">
+			where order_status=1
+		</if>
+		
+		<!-- 교환요청 -->
+		<if test="sort=='change'">
+			where order_status=2
+		</if>
+		
+		<!-- 환불요청 -->
+		<if test="sort=='refund'">
+			where order_status=3
+		</if>
+		
+		
+	</sql>
+	
+	
 	<insert id="addOdrDetail">
 		INSERT INTO order_detail_tb
 		(order_stock, delivery_status, invoice_no, gds_no, order_id, option_no) 
@@ -35,30 +70,24 @@
 		LIMIT #{pageStart}, 20
 	</select>
 	
-	<select id="getOdrDetailList" resultMap="OrderDetailMap">
+	<select id="getOdrDetailList" resultMap="OdJoinMap">
 		SELECT * 
 		FROM order_detail_tb
 		WHERE order_id=#{orderId}
 	</select>
 	
-	<select id="getMyOrderList" resultMap="OrderDetailMap">
+	<select id="getMyOrderList" resultMap="OdJoinMap">
 		SELECT * 
 		FROM order_tb
 		WHERE user_no=#{userNo}
 	</select>
 		
-	<select id="getOrderInfo" resultMap="OrderDetailMap">
+	<select id="getOrderInfo" resultMap="OdJoinMap">
 		SELECT * 
 		FROM order_tb, order_detail_tb
 		WHERE order_tb.order_id = order_detail_tb.order_id
 		AND order_tb.order_id = #{orderId}
 	</select>
-	
-	<update id = "enrollInvoiceNo">
-		UPDATE order_detail_tb
-		SET invoice_no = #{invoiceNo}
-		WHERE order_detail_no = #{orderDetailNo}
-	</update>
 		
 	<update id = "deliveryComplete">
 		UPDATE order_detail_tb
@@ -72,7 +101,7 @@
 		WHERE order_detail_no=#{orderDetailNo}
 	</update>
 	
-	<select id="orderDetPrice" resultMap="OrderDetailMap">
+	<select id="orderDetPrice" resultMap="OdJoinMap">
 		SELECT od.order_id, od.order_detail_no, od.gds_no, od.option_no, od.order_stock,
 	   	gds.gds_price,opt.option_add_price, od.order_stock*(gds.gds_price+opt.option_add_price) sum
 		FROM order_detail_tb od
@@ -80,5 +109,52 @@
 		LEFT OUTER JOIN option_tb opt ON od.option_no=opt.option_no
 		WHERE od.order_id={orderDetailNo};
 	</select>
+	
+	
+	<!-- 관리자 -->
+	    <!-- admin주문관리목록 -->
+    <select id="getAdminOdrList" resultMap="OrderDetailMap">
+    	SELECT order_detail_no, gds_no, order_id, option_no, order_stock, delivery_status, invoice_no, order_status
+    	FROM order_detail_tb
+    	<include refid="search"/>
+    	order by order_id
+    	limit #{pageStart}, #{countPerPage}
+    </select>
+    
+    <!-- 주문 count -->
+    <select id="countOrders" resultType="int">
+    	select count(*)
+    	from order_detail_tb
+    	<include refid="search"/>
+    </select>
+  
+	<!-- 취소교환환불 승인 -->
+	<update id="admitProb">
+		update order_detail_tb
+		set order_status = order_status + 10
+		where order_detail_no = #{orderDetailNo}
+	</update>
+	
+		<!-- 취소교환환불 거부 -->
+	<update id="rejectProb">
+		update order_detail_tb
+		set order_status = 0
+		where order_detail_no = #{orderDetailNo}
+	</update>
+	
+	<!-- 송장번호 등록 -->
+	<update id="enrollInvoice">
+		update order_detail_tb
+		set invoice_no=#{invoiceNo}, delivery_status=4
+		where order_detail_no=#{orderDetailNo}	
+	</update>
+	
+	<!-- 배송완료 등록 -->
+	<update id="deliverComplete">
+		update order_detail_tb
+		set delivery_status=5
+		where order_detail_no=#{orderDetailNo}
+	</update>
+	<!-- /관리자 -->
 	
 </mapper>    

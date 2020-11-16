@@ -51,30 +51,30 @@
 				<td>${b.optionStock}</td>
 				<td>${b.orderDetPrice}</td>				
 				<td>
-					<c:if test="${b.deliveryStatus} == 1">
+					<c:if test="${b.deliveryStatus == 1}">
 					입금대기
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 2">
+					<c:if test="${b.deliveryStatus == 2}">
 					상품준비중
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 3">
+					<c:if test="${b.deliveryStatus == 3}">
 					배송준비중
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 4">
+					<c:if test="${b.deliveryStatus == 4}">
 					배송중
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 5">
+					<c:if test="${b.deliveryStatus == 5}">
 					배송완료
 					</c:if>				
 				</td>
 				<td>
 					<form id="formObj" role="form" action="<c:url value='/mypage/orderStatus'/>" method="post">
-						<c:if test="${b.deliveryStatus} == 1 || ${b.deliveryStatus} == 2 ||${b.deliveryStatus} == 3">
+						<c:if test="${b.deliveryStatus == 1} || ${b.deliveryStatus == 2} ||${b.deliveryStatus == 3}">
 							<input type="hidden" name="orderDetailNo" value="${order.orderDetailNo}">
 							<input type="number" name="orderStatus" value=1>
 							<input class="cancelBtn" type="submit" value="취소">&nbsp;
 						</c:if>
-						<c:if test="${b.deliveryStatus} == 4 || ${b.deliveryStatus} == 5">
+						<c:if test="${b.deliveryStatus == 4} || ${b.deliveryStatus == 5}">
 							<input id="exchBtn" type="button" value="교환">&nbsp;
 							<input id="refundBtn" type="button" value="환불">&nbsp;					
 						</c:if>

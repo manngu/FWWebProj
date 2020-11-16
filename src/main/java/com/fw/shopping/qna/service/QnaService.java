@@ -25,13 +25,7 @@ public class QnaService implements IQnaService {
 		List<QnaVO> list = mapper.getReQnaList(gdsNo);
 		return list;
 	}
-
-	@Override
-	public QnaVO getQnaInfo(int qnaNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void addQna(QnaVO qna) {
 		if(qna.getQnaRef() == null) {
@@ -57,4 +51,25 @@ public class QnaService implements IQnaService {
 		return list;
 	}
 
+	@Override
+	public String getMemberName(int reviewNo) {
+		return mapper.getMemberName(reviewNo);
+	}
+	
+	@Override
+	public List<QnaVO> getMyReQnaList(int qnaNo) {
+		List<QnaVO> list = mapper.getMyReQnaList(qnaNo);
+		return list;
+	}
+
+	@Override
+	public QnaVO getQnaInfo(int qnaNo) {
+		return mapper.getQnaInfo(qnaNo);
+	}
+	
+	@Override
+	public List<QnaVO> getAdminQnaList() {
+		return mapper.getAdminQnaList();
+	}
+	
 }

@@ -1,5 +1,6 @@
 package com.fw.shopping.qna.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fw.shopping.qna.model.QnaVO;
 import com.fw.shopping.qna.service.IQnaService;
+import com.fw.shopping.review.model.ReviewVO;
 
 @Controller
 @RequestMapping("/qna")
@@ -20,8 +22,10 @@ public class QnaController {
 		@Autowired
 		private IQnaService service;
 		
-		@GetMapping("/{gdsNo}")
-		public String list(@PathVariable int gdsNo, Model model) {		
+	
+		public String list(int gdsNo, Model model) {		
+			
+			System.out.println(gdsNo);
 			
 			List<QnaVO> QList = service.getQnaList(gdsNo);
 			List<QnaVO> QReList = service.getReQnaList(gdsNo);
@@ -31,7 +35,24 @@ public class QnaController {
 			model.addAttribute("QList", QList);		
 			model.addAttribute("QReList", QReList);
 			
-			return "qna/qgdsList";
+			HashMap<Integer,String> map = new HashMap<Integer, String>();
+			HashMap<Integer,String> remap = new HashMap<Integer, String>();
+			for(QnaVO vo : QList) {
+				int num = vo.getQnaNo();
+				String name = service.getMemberName(vo.getQnaNo());
+				System.out.println("map 리뷰 번호 , name : "+num+" ,"+name);
+				map.put(num, name);
+			}		
+			for(QnaVO vo : QReList) {
+				int num = vo.getQnaNo();
+				String name = service.getMemberName(vo.getQnaNo());
+				System.out.println("remap 리뷰 번호 , name : "+num+" ,"+name);
+				remap.put(num, name);
+			}
+			model.addAttribute("map", map);
+			model.addAttribute("remap", remap);
+			
+			return "forward:/goods/"+gdsNo;
 		}
 		
 		@GetMapping("/replyWrite")
@@ -44,9 +65,7 @@ public class QnaController {
 			
 			model.addAttribute("vo", vo);
 			
-			list(vo.getGdsNo(), model);
-			
-			return "qna/qgdsList";
+			return "forward:/goods/"+vo.getGdsNo()+"/QreplyWrite";
 		}
 		
 		@GetMapping("/question")
@@ -59,16 +78,16 @@ public class QnaController {
 			
 			list(vo.getGdsNo(), model);
 			
-			return "qna/qgdsList";
+			return "forward:/goods/"+vo.getGdsNo();
 		}
 		
 		@GetMapping("/insert")
 		public String insert(QnaVO vo) {
 					
-			System.out.println("리뷰 작성 : "+vo);
+			System.out.println("qna 작성 : "+vo);
 			service.addQna(vo);
 			
-			return "redirect:/qna/"+vo.getGdsNo();
+			return "redirect:/goods/"+vo.getGdsNo();
 		}
 		
 		@GetMapping("/modify")
@@ -80,9 +99,7 @@ public class QnaController {
 			
 			model.addAttribute("QmodifyNo", QmodifyNo);
 			
-			list(gdsNo, model);
-			
-			return "qna/qgdsList";
+			return "redirect:/goods/"+gdsNo+"/qnaModify";
 		}
 		
 		@PostMapping("/modify")
@@ -91,7 +108,7 @@ public class QnaController {
 			System.out.println("수정할 리뷰 정보 : "+vo);
 			service.modifyQna(vo);
 			
-			return "redirect:/qna/"+vo.getGdsNo();
+			return "redirect:/goods/"+vo.getGdsNo();
 		}
 		
 		@PostMapping("/delete")
@@ -101,7 +118,7 @@ public class QnaController {
 			System.out.println("gdsNo : " +vo.getGdsNo());
 			service.deleteQna(vo.getQnaNo());
 			
-			return "redirect:/qna/"+vo.getGdsNo();
+			return "redirect:/goods/"+vo.getGdsNo();
 		}
 		
 }

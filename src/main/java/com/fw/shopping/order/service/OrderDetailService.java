@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.fw.shopping.admin.model.SearchVO;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.order.model.OrderDetailVO;
 import com.fw.shopping.order.model.OrderJoinVO;
 import com.fw.shopping.order.model.OrderVO;
@@ -54,17 +54,6 @@ public class OrderDetailService implements IOrderDetailService {
 		return 0;
 	}
 
-	@Override
-	public int enrollInvoiceNo(String orderId, String gdsName, String Invoice) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deliveryComplete() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public List<OrderVO> getOrderList(SearchVO search) {
@@ -83,6 +72,42 @@ public class OrderDetailService implements IOrderDetailService {
 		mapper.orderStatus(order);
 		
 	}
+	
+	//////관리자//////
+	@Override
+	public List<OrderDetailVO> getAdminOdrList(SearchVO search) {
+		return mapper.getAdminOdrList(search);
+	}
+	
+
+	@Override
+	public int countOrders(SearchVO search) {
+		return mapper.countOrders(search);
+	}
+
+	@Override
+	public void admitProb(int orderDetailNo) {
+		mapper.admitProb(orderDetailNo);
+
+	}
+	
+	@Override
+	public void rejectProb(int orderDetailNo) {
+		mapper.rejectProb(orderDetailNo);
+	}
+
+	@Override
+	public void enrollInvoice(int orderDetailNo, int invoiceNo) {
+		mapper.enrollInvoice(orderDetailNo, invoiceNo);
+		
+	}
+	
+	@Override
+	public void deliverComplete(int orderDetailNo) {
+		mapper.deliverComplete(orderDetailNo);
+		
+	}
+	//////////////////////
 
 
 

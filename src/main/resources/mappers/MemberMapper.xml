@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
- <mapper namespace="com.fw.shopping.member.repository.ICategoryMapper">
+ <mapper namespace="com.fw.shopping.member.repository.IMemberMapper">
 
 	<resultMap id="MemberMap" type="com.fw.shopping.member.model.MemberVO">
 		<id property="userNo" column="user_no" />
@@ -16,26 +16,31 @@
 		<result property="userRegDate" column="user_reg_date" />
 	</resultMap>
 	
-	<insert id="addMember">
+	<insert id="addMember"> <!-- 회원가입 -->
 		INSERT INTO member_tb
 		(user_email, user_pw, user_name, user_phone, user_addr1, user_addr2)
 		VALUES (#{userEmail}, #{userPw}, #{userName}, #{userPhone}, #{userAddr1}, #{userAddr2})
 	</insert>
 	
-	<delete id="deleteMember">
+	<delete id="deleteMember"> <!-- 회원탈퇴 -->
 		DELETE FROM member_tb
 		WHERE user_no=#{userNo}
 	</delete>
 	
-	<update id="modifyMember">
+	<update id="modifyMember"> <!-- 회원정보수정 -->
 		UPDATE member_tb
 		SET user_pw=#{userPw}, user_phone=#{userPhone}, user_addr1=#{userAddr1}, user_addr2=#{userAddr2}
 		WHERE user_no=#{userNo}
 	</update>
 	
-	<select id="showMemInfo" resultMap="MemberMap">
+	<select id="showMemInfo" resultMap="MemberMap"> <!-- 회원정보조회-->
 		SELECT * FROM member_tb
 		WHERE user_no=#{userNo}
+	</select>
+
+	<select id="checkMember" resultMap="MemberMap"> <!-- 로그인확인 -->
+		SELECT * FROM member_tb
+		WHERE user_email=#{userEmail}
 	</select>
 		
 </mapper>    

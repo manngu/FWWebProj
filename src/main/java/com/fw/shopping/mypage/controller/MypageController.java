@@ -1,6 +1,9 @@
 package com.fw.shopping.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fw.shopping.member.model.MemberVO;
 import com.fw.shopping.order.model.OrderDetailVO;
 import com.fw.shopping.order.model.OrderJoinVO;
-import com.fw.shopping.order.service.IOrderDetailService;
+import com.fw.shopping.order.model.OrderVO;
 import com.fw.shopping.order.service.IOrderService;
 import com.fw.shopping.qna.model.QnaVO;
 import com.fw.shopping.qna.service.IQnaService;
@@ -30,22 +34,30 @@ public class MypageController {
 	private IQnaService qnaService;
 	@Autowired
 	private IOrderService orderService;
-	@Autowired
-	private IOrderDetailService orderDetailService;
 
 	
 	
 	//목록 출력
 	@GetMapping
 	public String mypage() {
-		return "/mypage";
+		return "mypage/mypage";
 	}
 	
 	
 	//리뷰 목록 보기
 	@GetMapping("/reviewList")
-	public String reviewList(ReviewVO review, Model model) {
-		List<ReviewVO> reviewList = reviewService.getMyReviewList(review.getUserNo());
+	public String reviewList(ReviewVO review, Model model, HttpSession session) {
+		
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		List<ReviewVO> reviewList = new ArrayList();
+		
+		System.out.println("test : " +member);
+		
+		if (member != null) {
+			Integer userNo = member.getUserNo();
+			reviewList = reviewService.getMyReviewList(userNo);
+		}
+		
 		
 		model.addAttribute("review", reviewList);
 		
@@ -57,19 +69,37 @@ public class MypageController {
 	@GetMapping("/reviewCon/{reviewNo}")
 	public String reviewCon(@PathVariable Integer reviewNo, Model model) {
 		System.out.println("parameter(글 번호): " + reviewNo);
-		ReviewVO vo = reviewService.getReviewInfo(reviewNo);
-		System.out.println("Result Data: " + vo);
-		model.addAttribute("reviewOne", vo);
+		
+		List<ReviewVO> reviewList = reviewService.getReviewInfo(reviewNo);
+		List<ReviewVO> rMReList = reviewService.getMyReReviewList(reviewNo);
+
+		System.out.println("Result Data: " + reviewList);
+		System.out.println("rMReList: " + rMReList);
+		
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("rMReList", rMReList);
+		
 		return "mypage/reviewCon";
 	}
 	
 	//QnA 목록 보기
 	@GetMapping("/qnaList")
-	public String qnaList(QnaVO qna, Model model) {
-		List<QnaVO> qnaList = qnaService.getMyQnaList(qna.getUserNo());
-		System.out.println("qnaList : " + qnaList);
-		model.addAttribute("qna", qnaList);
+	public String qnaList(QnaVO qna, Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		List<QnaVO> qnaList = new ArrayList();
 		
+		System.out.println("test : " +member);
+
+		if (member != null) {
+			Integer userNo = member.getUserNo();
+			qnaList = qnaService.getMyQnaList(userNo);
+		}
+
+		
+		System.out.println("qnaList : " + qnaList);
+		
+		model.addAttribute("qna", qnaList);
+
 		return "mypage/qnaList";
 	}
 
@@ -77,19 +107,32 @@ public class MypageController {
 	@GetMapping("/qnaCon/{qnaNo}")
 	public String qnaCon(@PathVariable Integer qnaNo, Model model) {
 		System.out.println("parameter(글 번호): " + qnaNo);
-		QnaVO vo = qnaService.getQnaInfo(qnaNo);
-		System.out.println("Result Data: " + vo);
-		model.addAttribute("reviewOne", vo);
+
+		List<QnaVO> qnaList = qnaService.getQnaList(qnaNo);
+		List<QnaVO> qMReList = qnaService.getMyReQnaList(qnaNo);
+				
+		System.out.println("Result Data: " + qnaList);
+		System.out.println("qMReList : " + qMReList);
+
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("qMReList", qMReList);
+
 		return "mypage/qnaCon";
 	}	
 	
 	//주문 목록 보기
 	@GetMapping("/orderList")
-	public String orderList(Model model) {
-		int userNo = 8;
-		System.out.println("URL: /mypage/orderList GET -> result: ");
+	public String orderList(Model model, HttpSession session) {
+		Object userNoObj = session.getAttribute("user_no");
+		List<OrderJoinVO> orderList = new ArrayList();
+		if (userNoObj != null) {
+			Integer userNo = (Integer)userNoObj;
+			//orderList = orderService.getMyOrderList(userNo);
+		}
+		
+		System.out.println("URL: /mypage/orderList GET -> result: "+orderList);
 
-		List<OrderJoinVO> orderList = orderDetailService.getUODList(userNo);
+		
 			model.addAttribute("order", orderList);
 
 		return "mypage/orderList";
@@ -97,13 +140,14 @@ public class MypageController {
 	
 	//취소, 교환, 환불 요청
 	@PostMapping("/orderStatus")
-	public String orderList(OrderDetailVO order, RedirectAttributes ra) {
+	public String orderList(OrderJoinVO order, RedirectAttributes ra) {
 		System.out.println("URL: /mypage/orderList => POST");
-		System.out.println("parameter(주문상세 번호): " + order.getOrderDetailNo());
-		orderDetailService.orderStatus(order);
+		System.out.println("parameter(주문상세 번호): " + order.getOrderDetailsNo());
+		//orderService.orderStatus(order);
 		
 		return "redirect:/mypage/orderList";
 	}
 	
+
 	
 }

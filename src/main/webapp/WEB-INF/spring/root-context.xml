@@ -4,7 +4,15 @@
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
+	<!-- MultipartResolver bean객체 등록. 이 객체는 Multipart 객체를 컨트롤러에 전달하는 역할을 한다. -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	          <!-- 최대업로드 가능한 바이트크기 -->
+         <property name="maxUploadSize" value="52428800" />
+    	 <property name="defaultEncoding" value="utf-8" />
+    </bean>
+   
+    	
 	<!-- 히카리 커넥션풀 빈 등록 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
@@ -21,20 +29,20 @@
 	<!-- MyBatis 핵심객체 SqlSessionFactory 빈 등록 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="ds" />
-		<property name="mapperLocations" value="classpath:/mappers/*Mapper.xml" />
+		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml" />
 	</bean>
 	
 	<!-- 매퍼의 인터페이스를 스캔하는 설정 -->
 	<mybatis-spring:scan base-package="com.fw.shopping.faq.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.notice.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.mypage.repository"/>
-	<mybatis-spring:scan base-package="com.fw.shopping.admin.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.goods.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.member.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.cart.repository"/> 
 	<mybatis-spring:scan base-package="com.fw.shopping.order.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.qna.repository"/>
 	<mybatis-spring:scan base-package="com.fw.shopping.review.repository"/>
+	<mybatis-spring:scan base-package="com.fw.shopping.category.repository"/>
 
 
 		

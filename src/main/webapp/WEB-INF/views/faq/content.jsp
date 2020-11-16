@@ -28,9 +28,9 @@
           
           
          
-	          <input id="modBtn" type="button" value="수정" class="btn btn-warning" style="color:white;">&nbsp;&nbsp;
-	          
-	          <input type="submit" value="삭제" class="btn btn-danger" onclick="return confirm('정말로 삭제하시겠습니까?')">&nbsp;&nbsp;
+          <input id="modBtn" type="button" value="수정" class="btn btn-warning" style="color:white;">&nbsp;&nbsp;
+          
+          <input type="submit" value="삭제" class="btn btn-danger" onclick="return confirm('정말로 삭제하시겠습니까?')">&nbsp;&nbsp;
 
         </form>
 
@@ -56,7 +56,7 @@ $(function() {
 	//목록버튼 클릭이벤트 처리
 	$("#list-btn").click(function () {
 		console.log("목록 버튼이 클릭됨!");
-		location.href= '/faq/list';
+		location.href= '/shopping/faq/list';
 	});
 	
 	//수정버튼 클릭이벤트 처리
@@ -65,7 +65,7 @@ $(function() {
 	
 	modifyBtn.click(function() {
 		console.log("수정 버튼이 클릭됨!");
-		formElement.attr("action", "/faq/modify");
+		formElement.attr("action", "/shopping/faq/modify");
 		formElement.attr("method", "get");
 		formElement.submit();
 	});

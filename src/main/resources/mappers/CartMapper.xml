@@ -1,41 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-<mapper namespace="com.fw.shopping.cart.repository.ICartMapper">    
-    
-	<resultMap id="CartMap" type="com.fw.shopping.cart.model.CartVO">
-		<id property="cartNo" column="cart_no" />
-		<result property="cartStock" column="cart_stock" />
-		<result property="cartRegDate" column="cart_reg_date" />
-		<result property="userNo" column="user_no" />
-		<result property="gdsNo" column="gds_no" />
-		<result property="optionNo" column="option_no" />
-	</resultMap>
+ 
+ <mapper namespace="com.fw.shopping.cart.repository.ICartMapper">
+ 
+ 	<resultMap id="CartMap" type="com.fw.shopping.cart.model.CartJoinVO">
+ 		<id property="cartNo" column="cart_no"/>
+ 		<id property="gdsNo" column="gds_no"/>
+ 		<id property="optionNo" column="option_no"/>
+ 		<result property="userNo" column="user_no" />
+ 		<result property="cartStock" column="cart_stock" />
+ 		<result property="cartRegDate" column="cart_reg_date" />
+ 		<result property="gdsName" column="gds_name" />
+ 		<result property="optionName" column="option_name" />
+ 		<result property="gdsPrice" column="gds_price"/>
+ 		<result property="optionAddPrice" column="option_add_price"/>
+ 	</resultMap>
+ 	
+ 	<!-- 내 장바구니 목록 -->
+ 	<select id="getCartList" parameterType="int" resultMap="CartMap">
+	 	select cart_no, gds_name, option_name, cart_stock, user_no, gds_price, option_add_price
+		from cart_tb
+		join goods_tb on cart_tb.gds_no = goods_tb.gds_no
+		join option_tb on cart_tb.option_no = option_tb.option_no
+		where user_no=#{userNo}
+ 	</select>
+ 	
+ 	<!-- 장바구니 삭제 -->
+ 	<delete id="deleteCart">
+ 		delete from cart_tb
+ 		where cart_no=#{cartNo}
+ 	</delete>
 	
-	<insert id="addCart">
-		INSERT INTO cart_tb
-		(user_no, gds_no, option_no, cart_stock) 
-		VALUES(#{userNo}, #{gdsNo}, #{optionNo}, #{cartStock})
-	</insert>
-	
-	<delete id="deleteCart">
-		DELETE FROM cart_tb
-		WHERE cart_no=#{cartNo}
-	</delete>
-	
-	<update id="updateCart">
-		UPDATE cart_tb
-		SET cart_stock=#{cartStock}
-		WHERE cart_no=#{cartNo}
-	</update>
-	
-	<select id="getCartList" resultMap="CartMap">
-		SELECT goods.gds_name, option.option_name, cart.cart_stock, cart.cart_reg_date
-		FROM cart_tb cart
-		LEFT OUTER JOIN goods_tb goods ON cart.gds_no=goods.gds_no
-		LEFT OUTER JOIN option_tb option ON cart.option_no=option.option_no
-		WHERE cart.user_no=#{userNo}
-	</select>
 
+		
 </mapper>

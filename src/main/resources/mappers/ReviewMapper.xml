@@ -62,11 +62,38 @@
 			WHERE review_no=#{reviewNo}
 		</select>
 
-		<select id="getMyReviewList">
+		<select id="getMyReviewList" resultMap="ReviewMap">
 			SELECT *
 			FROM review_tb
 			WHERE user_no=#{userNo}
 		</select>
 	
+		<select id="getMemberName" resultType="String">
+			select user_name
+			from review_tb
+			join `shopping_mall`.`member_tb` 
+			on member_tb.user_no = review_tb.user_no
+			where review_tb.review_no=#{reviewNo};
+		</select>
+		
+		<select id="getMyReReviewList" resultMap="ReviewMap">
+			SELECT *
+			FROM review_tb
+			WHERE review_ref is not null AND review_ref=#{reviewNo}
+		</select>
+
+	<!-- 관리자가 댓글을 달아야 할 리뷰 목록 -->
+	<select id="getAdminReviewList" resultMap="ReviewMap">
+		select review_no, gds_no, user_no, review_reg_date
+		from review_tb
+		where review_no
+			not in (
+				select a.review_no
+				from review_tb a
+				join review_tb b
+				where a.review_no=b.review_ref)
+		and review_ref is null
+	</select>		
+		
 		
 </mapper>    

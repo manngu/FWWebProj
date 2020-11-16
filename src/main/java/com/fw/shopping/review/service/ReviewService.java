@@ -27,9 +27,9 @@ public class ReviewService implements IReviewService {
 	}
 
 	@Override
-	public ReviewVO getReviewInfo(int reviewNo) {
-		ReviewVO vo = mapper.getReviewInfo(reviewNo);
-		return vo;
+	public List<ReviewVO> getReviewInfo(int reviewNo) {
+		List<ReviewVO> List = mapper.getReviewInfo(reviewNo);
+		return List;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ReviewService implements IReviewService {
 
 	@Override
 	public void modifyReview(ReviewVO review) {
-		if(review.getReviewRef() != null) {
+		if(review.getReviewRef() == null) {
 			mapper.modifyReview(review);
 		}else {
 			mapper.modifyReReview(review);
@@ -65,6 +65,34 @@ public class ReviewService implements IReviewService {
 	public List<ReviewVO> getMyReviewList(int userNo) {
 		List<ReviewVO> List = mapper.getMyReviewList(userNo);
 		return List;
+	}
+	
+	@Override
+	public String getMemberName(int reviewNo) {
+		return mapper.getMemberName(reviewNo);
+	}
+	
+	@Override
+	public List<ReviewVO> getMyReReviewList(int reviewNo) {
+		List<ReviewVO> List = mapper.getMyReReviewList(reviewNo);
+		return List;
+	}
+
+	@Override
+	public void addReReview(ReviewVO review) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modifyReReview(ReviewVO review) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public List<ReviewVO> getAdminReviewList() {
+		return mapper.getAdminReviewList();
 	}
 
 }

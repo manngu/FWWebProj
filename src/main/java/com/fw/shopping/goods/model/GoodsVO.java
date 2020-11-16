@@ -1,16 +1,17 @@
 package com.fw.shopping.goods.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class GoodsVO{
 
 	private Integer gdsNo; // pk
-	private Integer cateCode;
+	private Integer cateNo;
 	private String gdsName;
 	private String gdsDes;
 	private String gdsThumbImg;
-	private Date gdsRegDate;
-	private Date gdsDday;
+	private Timestamp gdsRegDate;
+	private Timestamp gdsDday;
 	private Integer gdsType;
 	private Integer gdsSales;
 	private Integer gdsStatus;
@@ -18,18 +19,17 @@ public class GoodsVO{
 	private Integer gdsLimit;
 	private Integer gdsPrice;
 	private double gdsDiscount;
-
 	public Integer getGdsNo() {
 		return gdsNo;
 	}
 	public void setGdsNo(Integer gdsNo) {
 		this.gdsNo = gdsNo;
 	}
-	public Integer getCateCode() {
-		return cateCode;
+	public Integer getCateNo() {
+		return cateNo;
 	}
-	public void setCateCode(Integer cateCode) {
-		this.cateCode = cateCode;
+	public void setCateNo(Integer cateNo) {
+		this.cateNo = cateNo;
 	}
 	public String getGdsName() {
 		return gdsName;
@@ -49,16 +49,16 @@ public class GoodsVO{
 	public void setGdsThumbImg(String gdsThumbImg) {
 		this.gdsThumbImg = gdsThumbImg;
 	}
-	public Date getGdsRegDate() {
+	public Timestamp getGdsRegDate() {
 		return gdsRegDate;
 	}
-	public void setGdsRegDate(Date gdsRegDate) {
+	public void setGdsRegDate(Timestamp gdsRegDate) {
 		this.gdsRegDate = gdsRegDate;
 	}
-	public Date getGdsDday() {
+	public Timestamp getGdsDday() {
 		return gdsDday;
 	}
-	public void setGdsDday(Date gdsDday) {
+	public void setGdsDday(Timestamp gdsDday) {
 		this.gdsDday = gdsDday;
 	}
 	public Integer getGdsType() {
@@ -103,15 +103,15 @@ public class GoodsVO{
 	public void setGdsDiscount(double gdsDiscount) {
 		this.gdsDiscount = gdsDiscount;
 	}
-
 	@Override
 	public String toString() {
-		return "GoodsVO [gdsNo=" + gdsNo + ", cateCode=" + cateCode + ", gdsName=" + gdsName + ", gdsDes=" + gdsDes
+		return "GoodsVO [gdsNo=" + gdsNo + ", cateNo=" + cateNo + ", gdsName=" + gdsName + ", gdsDes=" + gdsDes
 				+ ", gdsThumbImg=" + gdsThumbImg + ", gdsRegDate=" + gdsRegDate + ", gdsDday=" + gdsDday + ", gdsType="
 				+ gdsType + ", gdsSales=" + gdsSales + ", gdsStatus=" + gdsStatus + ", gdsViewCnt=" + gdsViewCnt
 				+ ", gdsLimit=" + gdsLimit + ", gdsPrice=" + gdsPrice + ", gdsDiscount=" + gdsDiscount + "]";
 	}
 
+	
 	
 	
 }

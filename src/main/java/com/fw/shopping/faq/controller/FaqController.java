@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fw.shopping.admin.model.PageCreator;
-import com.fw.shopping.admin.model.SearchVO;
+import com.fw.shopping.commons.PageCreator;
+import com.fw.shopping.commons.PageVO;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.faq.model.FaqVO;
 import com.fw.shopping.faq.service.IFaqService;
-import com.fw.shopping.faq.model.FaqVO;
-import com.fw.shopping.admin.model.PageVO;
+import com.fw.shopping.member.model.MemberVO;
 
 @Controller
 @RequestMapping("/faq")
@@ -51,7 +51,7 @@ public class FaqController {
 		pc.setPaging(search);
 		
 		List<FaqVO> faqList = faqService.getFaqList(search);
-		pc.setArticleTotalCount(faqService.countFaqs(search));
+		pc.setTotalCount(faqService.countFaqs(search));
 	
 		model.addAttribute("faq", faqList);
 		model.addAttribute("pc", pc);
@@ -62,12 +62,17 @@ public class FaqController {
 	//FAQ 상세 조회 요청
 	@GetMapping("/content/{faqNo}")
 	public String content(@PathVariable Integer faqNo, Model model
-			, @ModelAttribute("p") SearchVO paging) {
+			, @ModelAttribute("p") SearchVO paging
+			, HttpSession session) {
 		System.out.println("URL: /faq/faqContent => GET");
 		System.out.println("parameter(글 번호): " + faqNo);
 		FaqVO vo = faqService.getFaqInfo(faqNo);
 		System.out.println("Result Data: " + vo);
 		model.addAttribute("faq", vo);
+		Object adminVerifyObj = session.getAttribute("admin_verify");
+		if (adminVerifyObj != null) {
+			model.addAttribute("admin_verify",(Integer)adminVerifyObj);
+		}
 		return "faq/content";
 	}
 
