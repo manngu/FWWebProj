@@ -3,12 +3,102 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
  <mapper namespace="com.fw.shopping.order.repository.IOrderMapper">
- 
+     
+	<resultMap id = "OrderMap" type = "com.fw.shopping.order.model.OrderJoinVO">
+		<id property="orderId" column="order_id"/>
+		<result property="userNo" column="user_no"/>
+		<result property="orderDetailNo" column="order_detail_no"/>
+		<result property="orderPerson" column="order_person"/>
+		<result property="orderAddr1" column="order_addr1"/>
+		<result property="orderAddr2" column="order_add2"/>
+		<result property="orderPhone" column="order_phone"/>
+		<result property="orderPrice" column="order_price"/>
+		<result property="orderRegDate" column="order_reg_date"/>
+		<result property="gdsNo" column="gds_no"/>
+		<result property="gdsName" column="gds_name"/>
+		<result property="optionNo" column="option_no"/>
+		<result property="optionName" column="option_name"/>
+		<result property="orderStock" column="order_stock"/>
+		<result property="deliveryStatus" column="delivery_status"/>
+		<result property="invoiceNo" column="invoice_no"/>
+		<result property="orderStatus" column="order_status"/>
+		<result property="sum" column="sum"/>
+	</resultMap>
+
 	<insert id="addOrder">
 		INSERT INTO order_tb
-		(order_id, order_person, order_addr1, order_add2, order_phone, order_price, user_no) 
+		(order_id, order_person, order_addr1, order_addr2, order_phone, order_price, user_no) 
 		VALUES (#{orderId}, #{orderPerson}, #{orderAddr1}, #{orderAddr2}, #{orderPhone}, #{orderPrice}, #{userNo})
 	</insert>
 
+	<insert id="addOdrDetail">
+		INSERT INTO order_detail_tb
+		(order_stock, delivery_status, invoice_no, gds_no, order_id, option_no) 
+		VALUES (#{orderStock}, 2, 0, #{gdsNo}, #{orderId}, #{optionNo})
+	</insert>
+	
+	<select id="getOrderList" resultType="String">
+		SELECT * 
+		FROM order_tb	
+		ORDER BY order_id DESC 
+		LIMIT #{pageStart}, 20
+	</select>
+	
+	<select id="getOdrDetailList" resultMap="OrderMap">
+		SELECT * 
+		FROM order_detail_tb
+		WHERE order_id=#{orderId}
+	</select>
+	
+ <select id="getMyOrderList" resultMap="OrderMap">
+      SELECT *,  od.order_stock*(g.gds_price+go.option_add_price) sum 
+      FROM order_tb o inner 
+      JOIN order_detail_tb od ON o.order_id = od.order_id
+      LEFT JOIN option_tb go ON go.option_no = od.option_no
+      LEFT JOIN goods_tb g ON g.gds_no = od.gds_no 
+      WHERE 1=1
+      AND user_no=#{userNo}
+   </select>
 		
+	<select id="getOrderInfo" resultMap="OrderMap">
+		SELECT * 
+		FROM order_tb, order_detail_tb
+		WHERE order_tb.order_id = order_detail_tb.order_id
+		AND order_tb.order_id =  #{orderId}
+	</select>
+
+	<select id="getOdDetailNoList" resultMap="OrderMap">
+		SELECT * 
+		FROM order_tb, order_detail_tb
+		WHERE order_tb.order_id = order_detail_tb.order_id
+		AND order_detail_tb.order_detail_no = #{orderDetailNo}
+	</select>
+	
+	<update id = "enrollInvoiceNo">
+		UPDATE order_detail_tb
+		SET invoice_no = #{invoiceNo}
+		WHERE order_detail_no = #{orderDetailNo}
+	</update>
+		
+	<update id = "deliveryComplete">
+		UPDATE order_detail_tb
+		SET delivery_status = 5
+		WHERE order_detail_no = #{orderDetailNo}
+	</update>
+			
+	<update id="orderStatus">
+		UPDATE order_detail_tb
+		SET order_status=#{orderStatus}
+		WHERE order_detail_no=#{orderDetailNo}
+	</update>
+	
+	<select id="orderDetPrice" resultMap="OrderMap">
+		SELECT od.order_id, od.order_detail_no, od.gds_no, od.option_no, od.order_stock,
+	   	gds.gds_price,opt.option_add_price, od.order_stock*(gds.gds_price+opt.option_add_price) sum
+		FROM order_detail_tb od
+		LEFT OUTER JOIN goods_tb gds ON od.gds_no=gds.gds_no
+		LEFT OUTER JOIN option_tb opt ON od.option_no=opt.option_no
+		WHERE od.order_id={orderDetailNo};
+	</select>
+	
 </mapper>    

@@ -67,7 +67,7 @@ table {
 					<tr>
 						<td><input type="text" name="reviewImg"value="${L.reviewImg}"></td>
 						<td><input type="text" name="reviewContent" value="${L.reviewContent}"></td>
-						<td>${L.userNo}</td>
+						<td>${map.get(L.reviewNo)}</td>
 						<td><fmt:formatDate value="${L.reviewRegDate}"
 								pattern="yyyy년 MM월 dd일 a hh:mm" /></td>
 						<td>
@@ -98,7 +98,7 @@ table {
 					<tr>
 						<td>${L.reviewImg}</td>
 						<td>${L.reviewContent}</td>
-						<td>${L.userNo}</td>
+						<td>${map.get(L.reviewNo)}</td>
 						<td><fmt:formatDate value="${L.reviewRegDate}"
 								pattern="yyyy년 MM월 dd일 a hh:mm" /></td>
 						<td>
@@ -122,17 +122,20 @@ table {
 			<!-- 리뷰 댓글 목록 -->
 			<c:forEach var="R" items="${ReList}">
 				<c:if test="${R.reviewRef == L.reviewNo}">
+				
 					<!-- 리뷰 댓글 수정 -->
 					<c:if test="${modifyNo == R.reviewNo}">
 						<form action="<c:url value='/review/modify'/>" method="post">
 						
 							<input type="hidden" name="gdsNo" id="gds_no" value="${R.gdsNo}" >
-							<input type="hidden" name="reviewNo" id="re_review-no" value="${R.reviewNo}">
-
+							<input type="hidden" name="reviewNo" id="re_review_no" value="${R.reviewNo}">
+							<input type="hidden" name="userNo" id="user_no" value="${R.userNo}">
+							<input type="hidden" name="reviewRef" id="re_review_ref" value="${R.reviewRef}">
+							
 							<tr>
 								<td align="right">▶</td>
 								<td><input type="text" name="reviewContent" value="${R.reviewContent}"></td>
-								<td>${R.userNo}</td>
+								<td>${remap.get(R.reviewNo)}</td>
 								<td><fmt:formatDate value="${R.reviewRegDate}"
 										pattern="yyyy년 MM월 dd일 a hh:mm" /></td>
 								<td></td>
@@ -154,7 +157,7 @@ table {
 							<tr>
 								<td align="right">▶</td>
 								<td>${R.reviewContent}</td>
-								<td>${R.userNo}</td>
+								<td>${remap.get(R.reviewNo)}</td>
 								<td><fmt:formatDate value="${R.reviewRegDate}"
 										pattern="yyyy년 MM월 dd일 a hh:mm" /></td>
 								<td></td>
@@ -170,18 +173,20 @@ table {
 				
 			</c:forEach>			
 			<!-- 리뷰 댓글 목록 끝-->
-
+			
+			<!-- 리뷰 댓글 추가 -->
 			<c:if test="${vo.reviewRef == L.reviewNo}">
 				<form action="<c:url value='/review/insert'/>" method="get">
 					<input type="hidden" name="gdsNo" id="gds_no" value="${vo.gdsNo}" >
 					<input type="hidden" name="reviewNo" id="re_review-no" value="${vo.reviewNo}">
 					<input type="hidden" name="orderId" id="order-id" value="${vo.orderId}">
 					<input type="hidden" name="reviewRef" id="review-ref" value="${vo.reviewRef}">
+					<input type="hidden" name="userNo" id="user_no" value="${vo.userNo}">
 					
 					<tr>
 						<td align="right">▶</td>
 						<td><input type="text" name="reviewContent"></td>
-						<td><input name="userNo" value="${vo.userNo}" readonly="readonly"></td>
+						<td><input name="userName" value="${user.userName}" readonly="readonly"></td>
 						<td></td>
 						<td></td>
 						<td><input type="submit" value="확인"> 
@@ -189,7 +194,7 @@ table {
 					</tr>
 				</form>
 			</c:if>
-
+			<!-- 리뷰 댓글 추가 끝-->
 		</c:forEach>
 		
 		

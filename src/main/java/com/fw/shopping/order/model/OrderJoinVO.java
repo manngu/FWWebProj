@@ -12,14 +12,17 @@ public class OrderJoinVO {
 	private String orderPhone;
 	private Integer orderPrice;
 	private Date orderRegDate;
-	private Integer orderDetailsNo; // pk
+	private Integer orderDetailNo; // pk
 	private Integer gdsNo;
+	private String gdsName;
 	private Integer optionNo;
+	private String optionName;
 	private Integer orderStock;
 	private Integer deliveryStatus;
 	private Long invoiceNo;
 	private Integer orderStatus;
 	private Integer orderDetPrice;
+	private Integer sum;
 	
 	
 	public String getOrderId() {
@@ -71,10 +74,10 @@ public class OrderJoinVO {
 		this.orderRegDate = orderRegDate;
 	}
 	public Integer getOrderDetailsNo() {
-		return orderDetailsNo;
+		return getOrderDetailsNo();
 	}
 	public void setOrderDetailsNo(Integer orderDetailsNo) {
-		this.orderDetailsNo = orderDetailsNo;
+		this.orderDetailNo = orderDetailsNo;
 	}
 	public Integer getGdsNo() {
 		return gdsNo;
@@ -119,16 +122,41 @@ public class OrderJoinVO {
 	public void setOrderDetPrice(Integer orderDetPrice) {
 		this.orderDetPrice = orderDetPrice;
 	}
-	
-	
+	public Integer getOrderDetailNo() {
+		return orderDetailNo;
+	}
+	public void setOrderDetailNo(Integer orderDetailNo) {
+		this.orderDetailNo = orderDetailNo;
+	}
+	public String getGdsName() {
+		return gdsName;
+	}
+	public void setGdsName(String gdsName) {
+		this.gdsName = gdsName;
+	}
+	public String getOptionName() {
+		return optionName;
+	}
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
+	}
+	public Integer getSum() {
+		return sum;
+	}
+	public void setSum(Integer sum) {
+		this.sum = sum;
+	}
 	@Override
 	public String toString() {
-		return "OrderJoin [orderId=" + orderId + ", userNo=" + userNo + ", orderPerson=" + orderPerson + ", orderAddr1="
-				+ orderAddr1 + ", orderAddr2=" + orderAddr2 + ", orderPhone=" + orderPhone + ", orderPrice="
-				+ orderPrice + ", orderRegDate=" + orderRegDate + ", orderDetailsNo=" + orderDetailsNo + ", gdsNo="
-				+ gdsNo + ", optionNo=" + optionNo + ", orderStock=" + orderStock + ", deliveryStatus=" + deliveryStatus
-				+ ", invoiceNo=" + invoiceNo + ", orderStatus=" + orderStatus + "]";
+		return "OrderJoinVO [orderId=" + orderId + ", userNo=" + userNo + ", orderPerson=" + orderPerson
+				+ ", orderAddr1=" + orderAddr1 + ", orderAddr2=" + orderAddr2 + ", orderPhone=" + orderPhone
+				+ ", orderPrice=" + orderPrice + ", orderRegDate=" + orderRegDate + ", orderDetailNo=" + orderDetailNo
+				+ ", gdsNo=" + gdsNo + ", gdsName=" + gdsName + ", optionNo=" + optionNo + ", optionName=" + optionName
+				+ ", orderStock=" + orderStock + ", deliveryStatus=" + deliveryStatus + ", invoiceNo=" + invoiceNo
+				+ ", orderStatus=" + orderStatus + ", orderDetPrice=" + orderDetPrice + ", sum=" + sum + "]";
 	}
 	
 	
+
+
 }

@@ -89,6 +89,20 @@
 		    <version>2.9.8</version>
 		</dependency>	
 
+		<!-- 파일업로드 관련 라이브러리 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<!-- 유틸리티 클래스, 스트림 구현, 파일 필터, 파일 비교기, 엔디안 변환 클래스 등 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
 
 				
 		<!-- AspectJ -->

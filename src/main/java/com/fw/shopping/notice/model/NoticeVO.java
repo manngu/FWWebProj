@@ -4,42 +4,44 @@ import java.util.Date;
 
 public class NoticeVO {
 	
-	private Integer NoticeNo; // pk
-	private String  NoticeTitle;
-	private String  NoticeContent;
-	private Date NoticeRegDate;
-
+	private Integer noticeNo; // pk
+	private String  noticeTitle;
+	private String  noticeContent;
+	private Date noticeRegDate;
 	
 	public Integer getNoticeNo() {
-		return NoticeNo;
+		return noticeNo;
 	}
 	public void setNoticeNo(Integer noticeNo) {
-		NoticeNo = noticeNo;
+		this.noticeNo = noticeNo;
 	}
 	public String getNoticeTitle() {
-		return NoticeTitle;
+		return noticeTitle;
 	}
 	public void setNoticeTitle(String noticeTitle) {
-		NoticeTitle = noticeTitle;
+		this.noticeTitle = noticeTitle;
 	}
 	public String getNoticeContent() {
-		return NoticeContent;
+		return noticeContent;
 	}
 	public void setNoticeContent(String noticeContent) {
-		NoticeContent = noticeContent;
+		this.noticeContent = noticeContent;
 	}
 	public Date getNoticeRegDate() {
-		return NoticeRegDate;
+		return noticeRegDate;
 	}
 	public void setNoticeRegDate(Date noticeRegDate) {
-		NoticeRegDate = noticeRegDate;
+		this.noticeRegDate = noticeRegDate;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "NoticeVO [NoticeNo=" + NoticeNo + ", NoticeTitle=" + NoticeTitle + ", NoticeContent=" + NoticeContent
-				+ ", NoticeRegDate=" + NoticeRegDate + "]";
+		return "NoticeVO [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
+				+ ", noticeRegDate=" + noticeRegDate + "]";
 	}
+
+	
+	
 
 
 

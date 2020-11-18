@@ -67,7 +67,7 @@ public class OrderVO{
 				+ orderAddr1 + ", orderAddr2=" + orderAddr2 + ", orderPhone=" + orderPhone + ", orderPrice="
 				+ orderPrice + ", orderRegDate=" + orderRegDate + "]";
 	}
-	
+
 	
 	
 }

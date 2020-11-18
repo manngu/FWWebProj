@@ -66,7 +66,7 @@ table {
 		</tr>
 	 	
 		<c:forEach var="Q" items="${QList}">
-			<!-- 리뷰 수정 -->
+			<!-- qna 수정 -->
 			<c:if test="${QmodifyNo == Q.qnaNo}">
 				<form action="<c:url value='/qna/modify'/>" method="post">
 				
@@ -76,10 +76,16 @@ table {
 					<tr>
 						<td><input type="text" name="qnaTitle"value="${Q.qnaTitle}"></td>
 						<td><input type="text" name="qnaContent" value="${Q.qnaContent}"></td>
-						<td>${Q.userNo}</td>
+						<td>${map.get(Q.qnaNo)}</td>
 						<td>
-							<input type="checkbox" name="qnaStatus" value="0">공개
-							<input type="checkbox" name="qnaStatus" value="1">비공개
+							<c:if test="${Q.qnaStatus == 0}">
+								<input type="radio" name="qnaStatus" value="0" checked>공개
+								<input type="radio" name="qnaStatus" value="1">비공개
+							</c:if>
+							<c:if test="${Q.qnaStatus == 1}">
+								<input type="radio" name="qnaStatus" value="0">공개
+								<input type="radio" name="qnaStatus" value="1" checked>비공개
+							</c:if>
 						</td>
 						<td><fmt:formatDate value="${Q.qnaRegDate}"
 								pattern="yyyy년 MM월 dd일 a hh:mm" /></td>
@@ -90,9 +96,9 @@ table {
 					</tr>			
 				</form>
 			</c:if>
-			<!-- 리뷰 수정 끝 -->
+			<!-- qna 수정 끝 -->
 			
-			<!-- 리뷰 목록 -->
+			<!-- qna 목록 -->
 			<c:if test="${QmodifyNo != Q.qnaNo}">
 				<form action="<c:url value='/qna/delete'/>" method="post">
 				
@@ -102,7 +108,7 @@ table {
 					<tr>
 						<td>${Q.qnaTitle}</td>
 						<td>${Q.qnaContent}</td>
-						<td>${Q.userNo}</td>
+						<td>${map.get(Q.qnaNo)}</td>
 						<td>
 							<c:if test="${Q.qnaStatus == 1}">비밀글</c:if>
 							<c:if test="${Q.qnaStatus == 0}">공개글</c:if>
@@ -118,13 +124,13 @@ table {
 					</tr>			
 				</form>
 			</c:if>
-			<!-- 리뷰 목록 끝 -->	
+			<!-- qna 목록 끝 -->	
 				
-			<!-- 리뷰 댓글 목록 -->
+			<!-- qna 댓글 목록 -->
 			<c:forEach var="QR" items="${QReList}">
 				<c:if test="${QR.qnaRef == Q.qnaNo}">
 					
-					<!-- 리뷰 댓글 수정 -->
+					<!-- qna 댓글 수정 -->
 					<c:if test="${QmodifyNo == QR.qnaNo}">
 						<form action="<c:url value='/qna/modify'/>" method="post">
 						
@@ -132,11 +138,12 @@ table {
 							<input type="hidden" name="qnaNo" id="qna-no" value="${QR.qnaNo}" >
 							<input type="hidden" name="qnaStatus" id="qna-status" value="${QR.qnaStatus}">
 							<input type="hidden" name="qnaTitle" id="qna-title" value="${QR.qnaTitle}">
+							<input type="hidden" name="userNo" id="user-no" value="${QR.userNo}" >
 							
 							<tr>
 								<td align="right">▶</td>
 								<td><input type="text" name="qnaContent" value="${QR.qnaContent}"></td>
-								<td>${QR.userNo}</td>
+								<td>${remap.get(QR.qnaNo)}</td>
 								<td></td>
 								<td><fmt:formatDate value="${QR.qnaRegDate}"
 										pattern="yyyy년 MM월 dd일 a hh:mm" /></td>
@@ -147,9 +154,9 @@ table {
 							</tr>
 						</form>
 					</c:if>
-					<!-- 리뷰 댓글 수정 끝-->
+					<!-- qna 댓글 수정 끝-->
 					
-					<!-- 리뷰 댓글 목록 -->
+					<!-- qna 댓글 목록 -->
 					<c:if test="${QmodifyNo != QR.qnaNo}">
 						<form action="<c:url value='/qna/delete'/>" method="post">
 							
@@ -159,7 +166,7 @@ table {
 							<tr>
 								<td align="right">▶</td>
 								<td>${QR.qnaContent}</td>
-								<td>${QR.userNo}</td>
+								<td>${remap.get(QR.qnaNo)}</td>
 								<td>
 									<c:if test="${Q.qnaStatus == 1}">비밀글</c:if>
 									<c:if test="${Q.qnaStatus == 0}">공개글</c:if>
@@ -173,11 +180,11 @@ table {
 							</tr>
 						</form>
 					</c:if>
-					<!-- 리뷰 댓글 목록 끝-->
+					<!-- qna 댓글 목록 끝-->
 				</c:if>
 				
 			</c:forEach>			
-			<!-- 리뷰 댓글 목록 끝-->
+			<!-- qna 댓글 목록 끝-->
 			
 			<!-- qna 댓글 쓰기 -->
 			<c:if test="${vo.qnaRef == Q.qnaNo}">
@@ -187,10 +194,12 @@ table {
 					<input type="hidden" name="qnaRef" id="qna-ref" value="${vo.qnaRef}">
 					<input type="hidden" name="qnaStatus" id="qna-status" value="${Q.qnaStatus}">
 					<input type="hidden" name="qnaTitle" id="qna-title" value="${Q.qnaTitle}">
+					<input type="hidden" name="userNo" id="re_user_qna-no" value="${vo.userNo}">
+					
 					<tr>
 						<td align="right">▶</td>
 						<td><textarea name="qnaContent" rows="4" cols="50" ></textarea></td>
-						<td><input name="userNo" value="${vo.userNo}" readonly="readonly"></td>
+						<td><input name="userName" value="${user.userName}" readonly="readonly"></td>
 						<td></td>
 						<td></td>
 						<td>
@@ -203,6 +212,7 @@ table {
 
 		</c:forEach>
 		
+		<!-- qna 문의하기 추가 -->
 		<c:if test="${addQuestion == 1}">
 			<form action="<c:url value='/qna/insert'/>" method="get">
 		
@@ -211,10 +221,10 @@ table {
 					<tr>
 						<td><input type="text" name="qnaTitle"></td>
 						<td><input type="text" name="qnaContent"></td>
-						<td>${question.userNo}</td>
+						<td>${user.userName}</td>
 						<td>
-							<input type="checkbox" name="qnaStatus" value="0">공개
-							<input type="checkbox" name="qnaStatus" value="1">비공개
+							<input type="radio" name="qnaStatus" value="0" checked>공개
+							<input type="radio" name="qnaStatus" value="1">비공개
 						</td>
 						<td></td>
 						<td>
@@ -224,10 +234,10 @@ table {
 					</tr>			
 			</form>
 		</c:if>
-		
+		<!-- qna 댓글 추가 끝 -->
 		
 	</table>
-	<!-- 리뷰  끝 -->
+	<!-- qna  끝 -->
 	<br>
 
 </body>

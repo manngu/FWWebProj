@@ -2,7 +2,7 @@ package com.fw.shopping.notice.service;
 
 import java.util.List;
 
-import com.fw.shopping.admin.model.SearchVO;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.notice.model.NoticeVO;
 
 public interface INoticeService {

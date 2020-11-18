@@ -12,17 +12,17 @@ header.masthead {
 <div class="container">
 
         <form role="form" method="post">
-          <input type="hidden" name="faqNo" value="${faq.faqNo}">
+          <input type="hidden" name="faqNo" value="${faqInfo.faqNo}">
         
            
           <div class="form-group">
             <label>제목</label>
-            <input type="text" class="form-control" name='faqTitle' value="${faq.faqTitle}">
+            <input type="text" class="form-control" name='faqTitle' value="${faqInfo.faqTitle}">
           </div>
 
           <div class="form-group">
             <label>내용</label>
-            <textarea class="form-control" rows="5" name='faqContent'>${faq.faqContent}</textarea>
+            <textarea class="form-control" rows="5" name='faqContent'>${faqInfo.faqContent}</textarea>
           </div>
 
           

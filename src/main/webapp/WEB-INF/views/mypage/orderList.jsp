@@ -28,7 +28,7 @@
 			</tr>
 		</thead>
 				
-		<c:if test="${orderList.size() <= 0}">
+		<c:if test="${order.size() <= 0}">
 			<tr>
 				<td colspan="5" align="center">
 					<strong>주문 내역이 없습니다!!</strong>
@@ -38,45 +38,46 @@
 
 		<!-- 게시물이 들어갈 공간 -->
 		
-		<c:if test="${orderList.size() > 0}">
+		<c:if test="${order.size() > 0}">
 		
 		<tbody>
-		<c:forEach var="b" items="${orderList}" >
+		<c:forEach var="b" items="${order}" >
 			<tr>
 				<td>${b.orderId}</td>
 				<td>${b.orderRegDate}</td>
 				<td>
 					<a href="<c:url value='#'/>"> ${b.gdsName}</a>
 				</td>
-				<td>${b.optionStock}</td>
-				<td>${b.orderDetPrice}</td>				
+				<td>${b.optionName}</td>
+				<td>${b.orderStock}</td>	
+				<td>${b.orderPrice}</td>			
 				<td>
-					<c:if test="${b.deliveryStatus} == 1">
+					<c:if test="${b.deliveryStatus == 1}">
 					입금대기
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 2">
+					<c:if test="${b.deliveryStatus == 2}">
 					상품준비중
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 3">
+					<c:if test="${b.deliveryStatus == 3}">
 					배송준비중
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 4">
+					<c:if test="${b.deliveryStatus == 4}">
 					배송중
 					</c:if>				
-					<c:if test="${b.deliveryStatus} == 5">
+					<c:if test="${b.deliveryStatus == 5}">
 					배송완료
 					</c:if>				
 				</td>
 				<td>
 					<form id="formObj" role="form" action="<c:url value='/mypage/orderStatus'/>" method="post">
-						<c:if test="${b.deliveryStatus} == 1 || ${b.deliveryStatus} == 2 ||${b.deliveryStatus} == 3">
-							<input type="hidden" name="orderDetailNo" value="${order.orderDetailNo}">
+						<input type="hidden" name="orderDetailNo" value="${b.orderDetailNo}">
+						<c:if test="${b.deliveryStatus == 1 || b.deliveryStatus == 2 || b.deliveryStatus == 3}">
 							<input type="number" name="orderStatus" value=1>
 							<input class="cancelBtn" type="submit" value="취소">&nbsp;
 						</c:if>
-						<c:if test="${b.deliveryStatus} == 4 || ${b.deliveryStatus} == 5">
-							<input id="exchBtn" type="button" value="교환">&nbsp;
-							<input id="refundBtn" type="button" value="환불">&nbsp;					
+						<c:if test="${b.deliveryStatus == 4 || b.deliveryStatus == 5}">
+							<button id="exchBtn" type="button">교환</button>&nbsp;
+							<button id="refundBtn" type="button">환불</button>&nbsp;					
 						</c:if>
 					</form>
 				</td>
@@ -105,7 +106,7 @@ $(function() {
 	
 	exchBtn.click(function() {
 		console.log("교환 버튼이 클릭됨!");
-		formElement.attr("action", "/mypage/orderStatus");
+		formElement.attr("action", "/shopping/mypage/orderStatus");
 		formElement.attr("method", "post");
 		formElement.submit(2);
 	});
@@ -114,9 +115,9 @@ $(function() {
 	//var modifyBtn = document.getElementById("modBtn"); //vanila js
 	var refundBtn = $("#refundBtn"); //jQuery
 	
-	exchBtn.click(function() {
+	refundBtn.click(function() {
 		console.log("환불 버튼이 클릭됨!");
-		formElement.attr("action", "/mypage/orderStatus");
+		formElement.attr("action", "/shopping/mypage/orderStatus");
 		formElement.attr("method", "post");
 		formElement.submit(3);
 	});

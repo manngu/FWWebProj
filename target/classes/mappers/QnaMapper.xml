@@ -47,15 +47,47 @@
 			SELECT * FROM qna_tb
 			WHERE gds_no=#{gdsNo} and qna_ref is not null
 		</select>
+		
+		<select id="getQnaInfo" resultMap="QnaMap">
+			SELECT * FROM qna_tb
+			WHERE qna_no=#{qnaNo}
+		</select>
+		
 		<select id="showQnaInfo" resultMap="QnaMap">
 			SELECT * FROM qna_tb
 			WHERE qna_no=#{qnaNo}
 		</select>
 
-		<select id="getMyQnaList">
+		<select id="getMyQnaList" resultMap="QnaMap">
 			SELECT *
 			FROM qna_tb
 			WHERE user_no=#{userNo}
+		</select>
+		
+		<select id="getMemberName" resultType="String">
+			select user_name
+			from qna_tb
+			join `shopping_mall`.`member_tb` 
+			on member_tb.user_no = qna_tb.user_no
+			where qna_tb.qna_no=#{qnaNo}
+		</select>
+		
+		<select id="getMyReQnaList" resultMap="QnaMap">
+			SELECT * FROM qna_tb
+			WHERE qna_ref is not null AND qna_ref=#{qnaNo}
+		</select>
+		
+			<!-- 관리자가 댓글을 달아야 할 qna 목록 -->
+		<select id="getAdminQnaList" resultMap="QnaMap">
+			select qna_no, gds_no, user_no, qna_ref, qna_status, qna_title, qna_content, qna_reg_date
+			from qna_tb
+			where qna_no
+				not in (
+					select a.qna_no
+					from qna_tb a
+					join qna_tb b
+					where a.qna_no=b.qna_ref)
+			and qna_ref is null
 		</select>
 		
 </mapper>    

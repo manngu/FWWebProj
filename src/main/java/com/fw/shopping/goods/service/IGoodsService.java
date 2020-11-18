@@ -2,8 +2,8 @@ package com.fw.shopping.goods.service;
 
 import java.util.List;
 
-import com.fw.shopping.admin.model.SearchVO;
-import com.fw.shopping.admin.model.SortingVO;
+import com.fw.shopping.commons.SearchVO;
+import com.fw.shopping.goods.model.GdsJoinCateVO;
 import com.fw.shopping.goods.model.GoodsVO;
 
 public interface IGoodsService {
@@ -21,5 +21,12 @@ public interface IGoodsService {
 	void deleteGoods(int gdsNo);	 //실제 삭제 쿼리x. visibility 수정
 	
 	//목록조회	: 
-	List<GoodsVO> getGoodsList(SearchVO search, SortingVO sort); //검색, 정렬
+	List<GoodsVO> getGoodsList(int gdsType); //검색, 정렬  SearchVO search, SortingVO sort 임시 제외
+	
+	//관리자목록조회
+	List<GdsJoinCateVO> getAdminGdsList();	
+	
+	//신상 인덱스
+	int getNewGdsInfo();
+	
 }

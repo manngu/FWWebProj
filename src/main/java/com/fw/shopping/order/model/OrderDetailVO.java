@@ -1,20 +1,16 @@
 package com.fw.shopping.order.model;
 
 public class OrderDetailVO {
-	
-	private Integer orderDetailNo; // pk
+
+	private Integer orderDetailsNo; // pk
 	private Integer gdsNo;
 	private String orderId;
-	private Integer optionNo;
-	private Integer orderStock;
-	private Integer deliveryStatus;
-	private Long invoiceNo;
-	private Integer orderStatus;
-	public Integer getOrderDetailNo() {
-		return orderDetailNo;
+
+	public Integer getOrderDetailsNo() {
+		return orderDetailsNo;
 	}
-	public void setOrderDetailNo(Integer orderDetailNo) {
-		this.orderDetailNo = orderDetailNo;
+	public void setOrderDetailsNo(Integer orderDetailsNo) {
+		this.orderDetailsNo = orderDetailsNo;
 	}
 	public Integer getGdsNo() {
 		return gdsNo;
@@ -46,10 +42,10 @@ public class OrderDetailVO {
 	public void setDeliveryStatus(Integer deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
-	public Long getInvoiceNo() {
+	public Integer getInvoiceNo() {
 		return invoiceNo;
 	}
-	public void setInvoiceNo(Long invoiceNo) {
+	public void setInvoiceNo(Integer invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
 	public Integer getOrderStatus() {
@@ -58,9 +54,15 @@ public class OrderDetailVO {
 	public void setOrderStatus(Integer orderStatus) {
 		this.orderStatus = orderStatus;
 	}
+	private Integer optionNo;
+	private Integer orderStock;
+	private Integer deliveryStatus;
+	private Integer invoiceNo;
+	private Integer orderStatus;
+
 	@Override
 	public String toString() {
-		return "OrderDetailVO [orderDetailNo=" + orderDetailNo + ", gdsNo=" + gdsNo + ", orderId=" + orderId
+		return "OrderDetailVO [orderDetailsNo=" + orderDetailsNo + ", gdsNo=" + gdsNo + ", orderId=" + orderId
 				+ ", optionNo=" + optionNo + ", orderStock=" + orderStock + ", deliveryStatus=" + deliveryStatus
 				+ ", invoiceNo=" + invoiceNo + ", orderStatus=" + orderStatus + "]";
 	}

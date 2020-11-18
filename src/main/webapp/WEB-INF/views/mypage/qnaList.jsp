@@ -24,7 +24,7 @@
 		<c:if test="${qna.size() <= 0}">
 			<tr>
 				<td colspan="5" align="center">
-					<strong>입력한 리뷰가 없습니다!!</strong>
+					<strong>입력한 문의가 없습니다!!</strong>
 				</td>
 			</tr>
 		</c:if>
@@ -37,8 +37,8 @@
 		<c:forEach var="b" items="${qna}" >
 			<tr>
 				<td>
-					<a href="<c:url value='/qna/qnaCon/${b.qnaNo}' />">
-				${b.qnaTitle}
+					<a href="<c:url value='/mypage/qnaCon/${b.qnaNo}' />">
+				${b.qnaContent}
 					</a>
 				</td>
 			</tr>

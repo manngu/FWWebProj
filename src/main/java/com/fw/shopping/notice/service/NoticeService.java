@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.fw.shopping.admin.model.SearchVO;
+import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.notice.model.NoticeVO;
 import com.fw.shopping.notice.repository.INoticeMapper;
 
