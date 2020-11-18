@@ -21,21 +21,25 @@
     <input type="radio" name="gdsType" value="2"> 특가상품 <br>
 
 
- <!-- 대분류
-    <select name="cateRef">
+카테고리:<br>
+대분류 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;소분류 <br>
+
+<select name="cateRef" id="cateRef">
+	<option value="">==선택==</option>
 	<c:forEach var="sup" items="${sup}">
 	<option value="${sup.cateNo}">${sup.cateName}</option>
 	</c:forEach>
-</select> )-->
+</select>
   
     
- 카테고리: <!--소분류..제이쿼리 처리  -->
-    <select name="cateNo">
-   		<c:forEach var="sub" items="${sub}">
-   				<option value="${sub.cateNo}">${sub.cateName}</option>
-   		</c:forEach>
-   </select>   
-  <br> 
+
+ <select name="cateNo" id="cateNo">
+	
+ 	<option>==선택==</option>
+ 	<c:forEach var="sub" items="${sub}">
+   		<option value="${sub.cateNo}">${sub.cateName}</option>
+   	</c:forEach>
+</select>   <br> 
   
   상품명: <input type="text" name="gdsName"> <br>
   마감일: <input type="text" name="gdsDday" value="2100-12-31 12:00:00"> <br>
@@ -47,7 +51,9 @@
     <input type="radio" name="gdsStatus" value="1"> 비공개 <br>
  
  썸네일: <input type="file" name="thumb"> <br>
+
 상세사진: <input type="file" name="des"> <br>
+
 
 
 
@@ -104,6 +110,99 @@
         
     });
     
+    
+  //체크박스 체크시!
+    $(document).on("change","input[name=check]",function(){
+    		if($(this).is(":checked")){
+    			//alert("체크박스 체크!");
+    			console.log($(this).parent().parent().find(".price").text());
+    			sum = sum + parseInt($(this).parent().parent().find(".price").text());
+    			console.log(sum);
+    			$("#s").val(sum);
+    		}else{
+    			//alert("체크박스 해제!");
+    			sum = sum - parseInt($(this).parent().parent().find(".price").text());
+    			console.log(sum);
+    			$("#s").val(sum);
+    		}
+    });	
+    
+
+    $("#cateRef").change(function(){
+    	var c = $(this).val();
+    	console.log(typeof c);
+    	console.log(c);
+    	
+    	var target = $("#cateNo");
+    	//target.empty();
+    	
+    	if(c == "") {
+    		target.append("<option>==선택==</option>");
+    	}
+    	
+    	$.ajax({
+    		type: "post",
+    		url: "/admin/goods/getsub",
+    		data: {"c":c},
+    		success:function(sub){
+    			if(sub!=null){
+    				alert("성공");
+    			}else{
+    				alert("실패!");
+    			}
+    		
+/*     			if(sub.length==0){
+    				target.append("<option>==선택==</option>");
+    			}else{
+    				$(sub).each(function(i){
+    					target.append("<option value='"+sub[i].cateNo+"'>"+sub[i].cateName+"</option>");
+    				});
+    			}*/
+    		}, error:function(xhr){
+    			console.log(xhr.responseText);
+    			alert("지금은 시스템 사정으로 요청하신 작업을 처리할 수 없습니다.");
+    			return;
+    		}
+    		 
+    	});
+    	
+    	
+    });
+/*     function fnChange(c){
+    	console.log(c);
+    	var $target = $("#cateNo");
+    	$target.empty();
+    	
+    	if(c == ""){
+    		$target.append("<option>==선택==</option>");
+    	}
+    	
+    	$.ajax({
+    		type: "post",
+    		url: "/admin/goods/getsub",
+    		async: false,
+    		data: { chocie : c },
+    		dataType: "json",
+    		success:function(sub){
+    			if(sub.length==0){
+    				$target.append("<option>==선택==</option>");
+    			}else{
+    				$(sub).each(function(i){
+    					$target.append("<option value="""+sub[i].cateNo+""">"+sub[i].cateName+"</option>");
+    				});
+    			}
+    		}, error:function(xhr){
+    			console.log(xhr.responseText);
+    			alert("지금은 시스템 사정으로 요청하신 작업을 처리할 수 없습니다.");
+    			return;
+    		}
+    	});
+    } */
+    		
+
+    
+    
+
     
 
     

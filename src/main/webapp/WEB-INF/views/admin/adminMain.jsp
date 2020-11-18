@@ -15,18 +15,14 @@
 	<a href="<c:url value='/admin/categories'/>">1. 카테고리 관리</a> <br>
 	<a href="<c:url value='/admin/goods'/>">2. 상품관리</a> <br>
 	<a href="<c:url value='/admin/orders'/>">3. 주문관리</a> <br>
-	<a href="<c:url value='/admin/reviews'/>">4. 리뷰관리</a> <br>
-	<a href="<c:url value='/admin/qnas'/>">5. qna관리</a> <br>
-	
-	
-	
-		<!-- faq/notice 등록,-->
-	
-	<a href="<c:url value=''/>">6. faq등록</a> <br>
-	<a href="<c:url value=''/>">7. notice등록</a> <br>
+	<a href="<c:url value='/admin/qnas'/>">4. qna관리</a> <br>
+	<a href="<c:url value='/admin/faqs/post'/>">5. faq등록</a> <br>
+	<a href="<c:url value='/admin/notices/post'/>">6. notice등록</a> <br>
 	
 	
 
+	
+		<%-- <a href="<c:url value='/admin/reviews'/>">4. 리뷰관리</a> <br> --%>
 	
 
 </body>

@@ -70,14 +70,14 @@ public class MypageController {
 	public String reviewCon(@PathVariable Integer reviewNo, Model model) {
 		System.out.println("parameter(글 번호): " + reviewNo);
 		
-		List<ReviewVO> reviewList = reviewService.getReviewInfo(reviewNo);
-		List<ReviewVO> rMReList = reviewService.getMyReReviewList(reviewNo);
-
-		System.out.println("Result Data: " + reviewList);
-		System.out.println("rMReList: " + rMReList);
-		
-		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("rMReList", rMReList);
+//		List<ReviewVO> reviewList = reviewService.getReviewInfo(reviewNo);
+//		List<ReviewVO> rMReList = reviewService.getMyReReviewList(reviewNo);
+//
+//		System.out.println("Result Data: " + reviewList);
+//		System.out.println("rMReList: " + rMReList);
+//		
+//		model.addAttribute("reviewList", reviewList);
+//		model.addAttribute("rMReList", rMReList);
 		
 		return "mypage/reviewCon";
 	}

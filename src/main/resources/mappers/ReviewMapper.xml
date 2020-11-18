@@ -93,7 +93,9 @@
 				join review_tb b
 				where a.review_no=b.review_ref)
 		and review_ref is null
-	</select>		
+	</select>	
+	
+
 		
 		
 </mapper>    

@@ -76,45 +76,6 @@ public class FaqController {
 		return "faq/content";
 	}
 
-	//게시물 삭제 처리 요청
-	@PostMapping("/delete")
-	public String remove(Integer faqNo, PageVO paging,
-					RedirectAttributes ra) {
-
-		System.out.println("URL: /faq/delete => POST");
-		System.out.println("parameter(글 번호): " + faqNo);
-		faqService.deleteFaq(faqNo);
-		ra.addFlashAttribute("msg", "delSuccess")
-		  .addAttribute("page", paging.getPage())
-		  .addAttribute("countPerPage", paging.getCountPerPage());
-
-		return "redirect:/faq/list";
-	}
-	
-	//게시물 수정 페이지 요청
-	@GetMapping("/modify")
-	public String modify(FaqVO faq, Model model
-			, @ModelAttribute("p") PageVO paging) {
-		System.out.println("URL: /faq/modify => GET");
-		System.out.println("parameter(글 번호): " + faq.getFaqNo());
-		FaqVO vo = faqService.getFaqInfo(faq.getFaqNo());
-		System.out.println("Result Data: " + vo);
-		model.addAttribute("faqInfo", vo);
-		
-		return "faq/modify";
-	}
-	
-	//게시물 수정 요청
-	@PostMapping("/modify")
-	public String modify(FaqVO faq, RedirectAttributes ra) {
-		System.out.println("URL: /faq/modify => POST");
-		System.out.println("parameter(게시글): " + faq);
-		faqService.modifyFaq(faq);
-		
-		ra.addFlashAttribute("msg", "modSuccess");
-		
-		return "redirect:/faq/content/" + faq.getFaqNo();
-	}
 
 	
 	

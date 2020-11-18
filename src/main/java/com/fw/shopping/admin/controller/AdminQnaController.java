@@ -40,10 +40,9 @@ public class AdminQnaController {
 	//QNA 답변
 	@PostMapping("/answer")
 	public String answer(QnaVO answer) {
-		//System.out.println(answer);
-		//이 부분은 홍무씨가 한 거 따오자~
-		return "redirect:/admin/qnas";
-		
+		System.out.println(answer);
+		qnaService.addQna(answer);
+		return "redirect:/admin/qnas";	
 	}
 	
 

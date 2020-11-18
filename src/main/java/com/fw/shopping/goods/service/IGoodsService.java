@@ -24,9 +24,12 @@ public interface IGoodsService {
 	List<GoodsVO> getGoodsList(int gdsType); //검색, 정렬  SearchVO search, SortingVO sort 임시 제외
 	
 	//관리자목록조회
-	List<GdsJoinCateVO> getAdminGdsList();	
+	List<GdsJoinCateVO> getAdminGdsList(SearchVO search);	
 	
 	//신상 인덱스
 	int getNewGdsInfo();
+	
+	//상품 수
+	int countGoods(SearchVO search);
 	
 }

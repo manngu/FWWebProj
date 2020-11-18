@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 포맷팅 관련 태그라이브러리(JSTL/fmt) --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js" > </script>
 
 
 <br><br> 
@@ -75,9 +75,7 @@
 					    </c:if>
 				    </ul>
 					<!-- 페이징 처리 끝 -->
-					</div>
-				</div>
-			</div>
+	
 					<!-- 검색 버튼 -->
 					<div class="row">
 						<div class="col-sm-2"></div>
@@ -101,23 +99,20 @@
 						</div>
 						<div class="col-sm-2"></div>
 					</div>
-					
-		
-	</div>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-
+<script>
 
 	//글쓰기 완료 시 띄울 알림창 처리
 	const result = "${msg}";
 	
 	if(result === "regSuccess") {
 		alert("게시글 등록이 완료되었습니다.");
-	} else if(result === "delSuccess") {
+	}else if(result === "delSuccess") {
 		alert("게시글 삭제가 완료되었습니다.");
 	}
+
 	
-	
+
 	//start jQuery
 	$(function() {
 		

@@ -22,6 +22,9 @@
 
 </table>
 
+
+
+
 <br>
 	
 	
@@ -30,7 +33,7 @@
 <input type="hidden" name="qnaRef" value="${q.qnaNo}">
 <input type="hidden" name="gdsNo" value="${q.gdsNo}">
 <input type="hidden" name="qnaStatus" value="${q.qnaStatus}">
-<input type="hidden" name="userNo" value="999999999"> <!-- 운영자 -->
+<input type="hidden" name="userNo" value="1"> <!-- 운영자 -->
 <input type="hidden" name="qnaTitle" value="관리자 답변">
 
 내용입력: <br>

@@ -18,8 +18,8 @@ import com.fw.shopping.category.service.ICategoryService;
 import com.fw.shopping.review.service.IReviewService;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminDftController {
+@RequestMapping("/admin/categories")
+public class AdminCateController {
 	
 	@Inject
 	ICategoryService catService;
@@ -27,24 +27,18 @@ public class AdminDftController {
 	@Inject
 	IReviewService revService;
 	
-
-
-	//관리자 페이지 연결
-	@GetMapping
-	public String adminPage() {
-		return "admin/adminMain";
-	}
-	
 	//카테고리 관리 페이지 연결
-	@GetMapping("/categories")
+	@GetMapping
 	public String categoryList(Model model) {
 		List<CategoryVO> list = catService.getJoinCateList();
-		model.addAttribute("list", list);		
+		List<CategoryVO> supList = catService.getSupCateList();
+		model.addAttribute("list", list)
+			.addAttribute("supList", supList);		
 		return "admin/category/list";
 	}
 	
 	//카테고리 등록 페이지
-	@GetMapping("/categoriesPost")
+	@GetMapping("/post")
 	public String EnrollcatePage(Model model) {
 		List<CategoryVO> list = catService.getSupCateList();
 		model.addAttribute("list", list);
@@ -52,38 +46,27 @@ public class AdminDftController {
 	}
 	
 	//카테고리 등록
-	@PostMapping("/categories")
+	@PostMapping("/post")
 	public String Enrollcategory(CategoryVO category) {
 		catService.addCategory(category);
 		return "redirect:/admin/categories";
 	}
 	
 	//카테고리 삭제
-	@GetMapping("/categoriesDelete/{cateNo}")
+	@GetMapping("/delete/{cateNo}")
 	public String DeleteCat(@PathVariable("cateNo") int cateNo) {
-		catService.deleteCate(cateNo);
+		catService.deleteCategory(cateNo);
 		return "redirect:/admin/categories";
 	}
 	
-
-	
-	
-	
-	
-	
-
-//	//FAQ등록 페이지 연결
-//	@GetMapping("/faqPage")
-//	public String faqPage() {
-//		return "admin/faqWrite";
-//	}
-//	
-//	//NOTICE등록 페이지 연결
-//	@GetMapping("/noticePage")
-//	public String noticePage() {
-//		return "admin/noticeWrite";
-//	}
-	
+	//카테고리 수정
+	@PostMapping("/modify")
+	public String modifyCat(CategoryVO cat) {
+		System.out.println(cat);
+		catService.modifyCategory(cat);
+		return "redirect:/admin/categories";
+		
+	}
 
 
 	

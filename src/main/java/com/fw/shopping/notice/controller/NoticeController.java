@@ -71,45 +71,6 @@ public class NoticeController {
 			return "notice/content";
 		}
 
-		//게시물 삭제 처리 요청
-		@PostMapping("/delete")
-		public String remove(Integer noticeNo, PageVO paging,
-						RedirectAttributes ra) {
-
-			System.out.println("URL: /notice/delete => POST");
-			System.out.println("parameter(글 번호): " + noticeNo);
-			noticeService.deleteNotice(noticeNo);
-			ra.addFlashAttribute("msg", "delSuccess")
-			  .addAttribute("page", paging.getPage())
-			  .addAttribute("countPerPage", paging.getCountPerPage());
-
-			return "redirect:/notice/list";
-		}
-		
-		//게시물 수정 페이지 요청
-		@GetMapping("/modify")
-		public String modify(NoticeVO notice, Model model
-				, @ModelAttribute("p") PageVO paging) {
-			System.out.println("URL: /notice/modify => GET");
-			System.out.println("parameter(글 번호): " + notice.getNoticeNo());			
-			NoticeVO vo = noticeService.getNoticeInfo(notice.getNoticeNo());
-			System.out.println("Result Data: " + vo);
-			model.addAttribute("noticeInfo", vo);
-			
-			return "notice/modify";
-		}
-		
-		//게시물 수정 요청
-		@PostMapping("/modify")
-		public String modify(NoticeVO notice, RedirectAttributes ra) {
-			System.out.println("URL: /notice/modify => POST");
-			System.out.println("parameter(게시글): " + notice);
-			noticeService.modifyNotice(notice);
-			
-			ra.addFlashAttribute("msg", "modSuccess");
-			
-			return "redirect:/notice/content/" + notice.getNoticeNo();
-		}
 
 		
 

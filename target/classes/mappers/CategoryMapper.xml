@@ -29,8 +29,10 @@
 	
 	<update id="modifyCategory">
 		UPDATE category_tb
-		SET cate_ref=#{cateRef}, cate_name=#{cateName}
-		WHERE cate_no=#{cateNo}
+		SET cate_name=#{cateName},
+			cate_ref=#{cateRef}
+		where cate_no=${cateNo}
+		
 	</update>
 	
 	<delete id="deleteCategory">
@@ -38,7 +40,7 @@
 		WHERE cate_no=#{cateNo}
 	</delete>
 	
-		<select id="getJoinCateList" resultMap="CateSelfJoinMap">
+	<select id="getJoinCateList" resultMap="CateSelfJoinMap">
 		select b.cate_no, a.cate_name ref_name, b.cate_name
 		from category_tb a
 		right outer join category_tb b
@@ -55,7 +57,11 @@
 		select *
 		from category_tb
 		where cate_ref is not null	
-	
 	</select>
 		
+	<select id="getCateListByRef" resultMap="CategoryMap">
+		select *
+		from category_tb
+		where cate_ref = #{cateRef}
+	</select>
 </mapper>

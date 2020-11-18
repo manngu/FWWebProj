@@ -14,13 +14,15 @@ public interface ICategoryService {
 	
 	void addCategory(CategoryVO cat);
 	
-	void deleteCate(int cateNo);
+	void deleteCategory(int cateNo);
 	
 	List<CategoryVO> getJoinCateList();
 
 	CategoryVO getCateInfo(int cateCode);
 
-	void modifyCate(CategoryVO cat);
+	void modifyCategory(CategoryVO cat);
+	
+	List<CategoryVO> getCateListByRef(int cateRef);
 
 
 

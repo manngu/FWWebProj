@@ -17,8 +17,8 @@ public class GoodsService implements IGoodsService {
 	private IGoodsMapper mapper;
 	
 	@Override
-	public List<GdsJoinCateVO> getAdminGdsList() {
-		return mapper.getAdminGdsList();
+	public List<GdsJoinCateVO> getAdminGdsList(SearchVO search) {
+		return mapper.getAdminGdsList(search);
 	}
 
 	@Override
@@ -52,6 +52,11 @@ public class GoodsService implements IGoodsService {
 	@Override
 	public List<GoodsVO> getGoodsList(int gdsType) {
 		return mapper.getGoodsList(gdsType);
+	}
+	
+	@Override
+	public int countGoods(SearchVO search) {
+		return mapper.countGoods(search);
 	}
 
 }

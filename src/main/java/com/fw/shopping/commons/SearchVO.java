@@ -37,6 +37,14 @@ public class SearchVO extends PageVO{//페이징(기본)+검색
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
+
+
+	@Override
+	public String toString() {
+		return "SearchVO [keyword=" + keyword + ", condition=" + condition + ", sort=" + sort + "]";
+	}
+	
+	
 	
 	
 }

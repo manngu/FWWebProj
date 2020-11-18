@@ -6,13 +6,29 @@
 <head>
 <meta charset="UTF-8">
 <title>상품관리 페이지</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js" > </script>
 </head>
 <body>
 
 <h1>상품관리 페이지</h1>
 
 <a href="<c:url value='/admin'/>">관리자메인 페이지로</a> <br>
-<a href="<c:url value='/admin/goods/post'/>">상품등록</a>
+<a href="<c:url value='/admin/goods/post'/>">상품등록</a> <br><br>
+
+
+<a href="<c:url value='/admin/goods'/>"><button>리셋</button></a> <br><br>
+
+<form action="<c:url value='/admin/goods'/>" method="get">
+<input type="hidden" name="condition" value="cateSort">
+<select name="keyword" onchange="fncateSort(this.form)">
+	<option value="">==카테고리선택==</option> 
+	<c:forEach var="cat" items="${catList}">
+		<option value="${cat.cateNo}">${cat.cateName}</option>	
+	</c:forEach>
+</select>
+</form>
+<br>
+
 
 <table border="1">
 <tr>
@@ -37,6 +53,37 @@
 </tr>
 </c:forEach>
 </table>
+
+			<!-- 페이징 처리 부분  -->
+
+					<!-- 이전버튼 -->
+					<c:if test="${pc.prev}">
+						<a href="<c:url value='/admin/goods${pc.makeURI(pc.beginPage-1)}'/>">이전</a> 
+					</c:if>
+
+
+					<!-- 페이지 버튼 -->
+					<c:forEach var="pageNum" begin="${pc.beginPage}" end="${pc.endPage}">
+						<a href="<c:url value='/admin/goods${pc.makeURI(pageNum)}'/>"
+							style="${(pc.paging.page == pageNum) ? 'font-weight:bold' : '' }">${pageNum}</a>
+					</c:forEach>
+
+					<!-- 다음 버튼 -->
+					<c:if test="${pc.next}">
+						<a href="<c:url value='/admin/goods${pc.makeURI(pc.endPage+1)}'/>">다음</a>
+					</c:if>
+
+			<!-- 페이징 처리 끝 -->
+
+
+
+
+<script>
+function fncateSort(obj)
+{
+	obj.submit();
+}
+</script>
 
 
 

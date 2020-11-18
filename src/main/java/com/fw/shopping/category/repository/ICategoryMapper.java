@@ -20,9 +20,11 @@ public interface ICategoryMapper {
 
 	void addCategory(int cateRef, CategoryVO cat);
 	
-	void deleteCate(int cateNo);
+	void deleteCategory(int cateNo);
 
-	void modifyCate(CategoryVO cat);
+	void modifyCategory(CategoryVO cat);
+	
+	List<CategoryVO> getCateListByRef(int cateRef);
 
 
 	

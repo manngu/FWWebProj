@@ -25,11 +25,10 @@ public class ReviewService implements IReviewService {
 		List<ReviewVO> List = mapper.getReReviewList(gdsNo);
 		return List;
 	}
-
+	
 	@Override
-	public List<ReviewVO> getReviewInfo(int reviewNo) {
-		List<ReviewVO> List = mapper.getReviewInfo(reviewNo);
-		return List;
+	public ReviewVO getReviewInfo(int reviewNo) {
+		return mapper.getReviewInfo(reviewNo);
 	}
 
 	@Override
@@ -94,5 +93,6 @@ public class ReviewService implements IReviewService {
 	public List<ReviewVO> getAdminReviewList() {
 		return mapper.getAdminReviewList();
 	}
+
 
 }

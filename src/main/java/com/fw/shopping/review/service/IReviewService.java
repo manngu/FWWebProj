@@ -14,7 +14,7 @@ public interface IReviewService {
 	
 	List<ReviewVO> getMyReReviewList(int reviewNo);
 	
-	List<ReviewVO> getReviewInfo(int reviewNo); //내가 쓴 리뷰 보기
+	ReviewVO getReviewInfo(int reviewNo); 
 	
 	//ReviewVO getReviewInfo(int reviewNo);
 	
@@ -33,5 +33,6 @@ public interface IReviewService {
 	String getMemberName(int reviewNo);
 	
 	List<ReviewVO> getAdminReviewList(); //관리자가 확인해야할 리뷰 목록
+	
 
 }

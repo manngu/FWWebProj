@@ -30,20 +30,20 @@ public class AdminReviewController {
 		return "admin/review/list";
 	}
 	
-//	//QNA 답변 페이지 호출
-//	@GetMapping("/{qnaNo}")
-//	public String answerPage(@PathVariable("qnaNo") int qnaNo, Model model) {
-//		model.addAttribute("q", qnaService.getQnaInfo(qnaNo));
-//		return "admin/answer";
-//	}
-//	
-//	//QNA 답변
-//	@PostMapping("/answer")
-//	public String answer(QnaVO answer) {
-//		//System.out.println(answer);
-//		//이 부분은 홍무씨가 한 거 따오자~
-//		return "redirect:/admin/qnas";
-//		
-//	}
+	//review 답변 페이지 호출
+	@GetMapping("/{reviewNo}")
+	public String replyPage(@PathVariable("reviewNo") int reviewNo, Model model) {
+		model.addAttribute("rev", revService.getReviewInfo(reviewNo));
+		return "admin/review/replyPost";
+	}
+	
+	//review 답변
+	@PostMapping("/reply")
+	public String replyReview(ReviewVO review) {
+		
+		System.out.println(review);
+		revService.addReview(review);
+		return "redirect:/admin/reviews";
+	}
 
 }

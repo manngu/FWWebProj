@@ -4,42 +4,44 @@ import java.util.Date;
 
 public class FaqVO {
 	
-	private Integer FaqNo; // pk
-	private String  FaqTitle;
-	private String  FaqContent;
-	private Date FaqRegDate;
-
+	private Integer faqNo; // pk
+	private String  faqTitle;
+	private String  faqContent;
+	private Date faqRegDate;
+	
+		
 	public Integer getFaqNo() {
-		return FaqNo;
+		return faqNo;
 	}
 	public void setFaqNo(Integer faqNo) {
-		FaqNo = faqNo;
+		this.faqNo = faqNo;
 	}
 	public String getFaqTitle() {
-		return FaqTitle;
+		return faqTitle;
 	}
 	public void setFaqTitle(String faqTitle) {
-		FaqTitle = faqTitle;
+		this.faqTitle = faqTitle;
 	}
 	public String getFaqContent() {
-		return FaqContent;
+		return faqContent;
 	}
 	public void setFaqContent(String faqContent) {
-		FaqContent = faqContent;
+		this.faqContent = faqContent;
 	}
-	
 	public Date getFaqRegDate() {
-		return FaqRegDate;
+		return faqRegDate;
 	}
-	
 	public void setFaqRegDate(Date faqRegDate) {
-		FaqRegDate = faqRegDate;
+		this.faqRegDate = faqRegDate;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "FaqVO [FaqNo=" + FaqNo + ", FaqTitle=" + FaqTitle + ", FaqContent=" + FaqContent + "]";
+		return "FaqVO [faqNo=" + faqNo + ", faqTitle=" + faqTitle + ", faqContent=" + faqContent + ", faqRegDate="
+				+ faqRegDate + "]";
 	}
+
+	
 
 	
 }

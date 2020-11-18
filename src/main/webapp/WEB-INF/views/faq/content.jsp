@@ -18,7 +18,7 @@
           </div>
 
          
-        <form id="formObj" role="form" action="<c:url value='/faq/delete'/>" method="post">  
+        <form id="formObj" role="form" action="<c:url value='/admin/faqs/delete'/>" method="post">  
           
           <input type="hidden" name="faqNo" value="${faq.faqNo}">
           <input type="hidden" name="page" value="${p.page}">
@@ -65,7 +65,7 @@ $(function() {
 	
 	modifyBtn.click(function() {
 		console.log("수정 버튼이 클릭됨!");
-		formElement.attr("action", "/shopping/faq/modify");
+		formElement.attr("action", "/shopping/admin/faqs/modify");
 		formElement.attr("method", "get");
 		formElement.submit();
 	});

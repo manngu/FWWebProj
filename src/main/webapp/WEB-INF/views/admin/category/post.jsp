@@ -12,36 +12,53 @@
 <h1>카테고리 등록 페이지</h1>
 
 
-<form action="<c:url value='/admin/categories'/>" method="post">
+<form action="<c:url value='/admin/categories/post'/>" method="post">
+
 <div class="cateType">
-<input type="radio" name="Sup" checked="checked" value="1"> 상위 카테고리 추가
-<input type="radio" name="Sup" value="2"> 하위 카테고리 추가 --제이쿼리로 이거 선택 시, 밑의 셀렉트가 나오도록 할 것.
+<input type="radio" name="type" value="1"> 상위 카테고리 추가
+<input type="radio" name="type" value="2"> 하위 카테고리 추가
+</div>
+<br>
+
+<div class="sup" style="display:none">
+	카테고리 이름: <input type="text" name="cateName"/><br> <br>
+  	<input type="submit"> <br>
 </div>
 
-
-상위 카테고리: 
-<select name="cateRef">
-	<c:forEach var="cat" items="${list}">
-	<option value="${cat.cateNo}">${cat.cateName}</option>
-	</c:forEach>
-</select>
-
-<br>
-    
-카테고리 이름: <input type="text" name='cateName'/> <br>
-
-  <input type="submit"> <br>
-
-
+<div class="sub" style="display:none">
+	상위 카테고리: 
+	<select name="cateRef" id="cateRef">
+		<c:forEach var="cat" items="${list}">
+		<option value="${cat.cateNo}">${cat.cateName}</option>
+		</c:forEach>
+	</select> <br>
+   	카테고리 이름: <input type="text" name="cateName"/> <br> <br>
+  	<input type="submit"> <br>
+</div>
 
 </form>
 
+
+
+
+
+
 <script>
-/* $("input:radio[name=Sup]").click(function(){
-	if($("input:radio[name=]"))
-}); */
-
-
+$("input:radio[name=type]").click(function(){
+	if($("input:radio[name=type]:checked").val()=="1"){ //상위 카테고리 추가
+		$(".sub").find("select, input").prop("disabled",true);
+		$(".sup").find("input").prop("disabled",false);
+		$(".sub").hide();
+		$(".sup").show();
+	
+	}else if($("input:radio[name=type]:checked").val()=="2"){ //하위 카테고리 추가
+		$(".sup").find("input").prop("disabled",true);
+		$(".sub").find("input,select").prop("disabled",false);
+		$(".sup").hide();
+		$(".sub").show();
+		
+	}
+});
 
 </script>
 

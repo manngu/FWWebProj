@@ -43,8 +43,8 @@ public class CategoryService implements ICategoryService {
 	}
 	
 	@Override
-	public void deleteCate(int cateNo) {
-		mapper.deleteCate(cateNo);
+	public void deleteCategory(int cateNo) {
+		mapper.deleteCategory(cateNo);
 		
 	}
 	
@@ -52,16 +52,20 @@ public class CategoryService implements ICategoryService {
 	
 	@Override
 	public CategoryVO getCateInfo(int cateCode) {
-
 		return null;
 	}
 
 
 
 	@Override
-	public void modifyCate(CategoryVO cat) {
-
+	public void modifyCategory(CategoryVO cat) {
+		mapper.modifyCategory(cat);
 		
+	}
+	
+	@Override
+	public List<CategoryVO> getCateListByRef(int cateRef) {
+		return mapper.getCateListByRef(cateRef);
 	}
 
 

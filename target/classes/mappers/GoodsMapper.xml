@@ -10,7 +10,7 @@
 			<result property="gdsName" column="gds_name"/>
 			<result property="gdsDes" column="gds_des"/>
 			<result property="gdsThumbImg" column="gds_thumb_img"/>
-			<result property="gdsRegDate" column="gds_dday"/>
+			<result property="gdsRegDate" column="gds_reg_date"/>
 			<result property="gdsDday" column="gds_dday"/>
 			<result property="gdsType" column="gds_status"/>
 			<result property="gdsSales" column="gds_status"/>
@@ -33,18 +33,20 @@
 	
 	
 	<!-- 중복되는 동적 SQL문에 대한 처리 -->
-	<sql id="searching">
+	<sql id="gdsSort">
 		<!-- 동적 SQL 구문 작성 -->
-		<if test="condition=='sales'">
-			where sales > #{keyword}
+		<if test="condition=='cateSort'">
+			where goods.cate_no=#{keyword}
 		</if>
 	</sql>
 	
-	<sql id="sorting">
-		<if test="sort=='gdsNoDESC'">
-			ORDER BY gds_no DESC
+	<sql id="sort">
+		<!-- 동적 SQL 구문 작성 -->
+		<if test="condition=='cateSort'">
+			where cate_no=#{keyword}
 		</if>
 	</sql>
+	
 	
 	
 	<insert id="addGoods">
@@ -91,9 +93,9 @@
 		FROM goods_tb goods
 		JOIN category_tb category
 		ON goods.cate_no=category.cate_no
-		<!-- <include refid="searching" /> 
-		<include refid="sorting" />
-		 LIMIT #{pageStart}, #{countPerPage}-->
+		<include refid="gdsSort"/>
+		LIMIT #{pageStart}, #{countPerPage}
+
 	</select>
 	
 	<!-- 가장 최신 상품 인덱스 가져오기 : 상품은 삭제되지 않으므로 가장 최신 상품은 가장 마지막 인덱스를 가지고 있다.  -->
@@ -108,6 +110,12 @@
 		SELECT *
 		FROM goods_tb
 		LIMIT #{pageStart}, 20
+	</select>
+	
+	<select id="countGoods" resultType="int">
+		SELECT count(*)
+		FROM goods_tb
+		<include refid="sort"/>
 	</select>
 	
 	

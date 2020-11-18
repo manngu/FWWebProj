@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fw.shopping.category.model.CategoryVO;
 import com.fw.shopping.category.service.ICategoryService;
 import com.fw.shopping.commons.FileUploadService;
+import com.fw.shopping.commons.PageCreator;
 import com.fw.shopping.commons.SearchVO;
 import com.fw.shopping.commons.SortVO;
 import com.fw.shopping.goods.model.GdsJoinCateVO;
@@ -43,14 +46,21 @@ public class AdminGdsController {
 	
 	//상품 리스트 조회
 	@GetMapping
-	public String goodsList(SearchVO search, SortVO sort, Model model) {
+	public String goodsList(SearchVO search, Model model) {
 
-		//search.setPage(page);
-		search.setCondition("take");
-		search.setKeyword("");
-		List<GdsJoinCateVO> list = gdsService.getAdminGdsList();
+		System.out.println("searchVO: "+search);
+		
+		PageCreator pc = new PageCreator();
+		pc.setPaging(search);
 
-		model.addAttribute("list", list);
+		List<GdsJoinCateVO> list = gdsService.getAdminGdsList(search);
+		pc.setTotalCount(gdsService.countGoods(search));
+		
+
+		
+		model.addAttribute("list", list)
+			.addAttribute("pc", pc)
+			.addAttribute("catList", catService.getSubCateList());
 		
 		
 		return "admin/goods/list";
@@ -60,40 +70,12 @@ public class AdminGdsController {
 	@GetMapping("/{gdsNo}")
 	public String gdsInfo(@PathVariable("gdsNo") int gdsNo, Model model) {
 		model.addAttribute("gds", gdsService.getGdsInfo(gdsNo))
-				.addAttribute("opt", optService.getOptionList(gdsNo))
-				.addAttribute("check", "detail");
+				.addAttribute("opt", optService.getOptionList(gdsNo));
 		return "admin/goods/detail";
 		
 	}
 	
-	
-	//상품 수정 페이지
-	@GetMapping("/modify/{gdsNo}")
-	public String gdsModify(@PathVariable("gdsNo") int gdsNo, Model model) {
-		model.addAttribute("gds", gdsService.getGdsInfo(gdsNo))
-			.addAttribute("opt", optService.getOptionList(gdsNo))
-			.addAttribute("check", "수정");
-		return "admin/goods/detail";		
-	}
-	
-	//상품 수정
-	@PostMapping("/modify/{gdsNo}")
-	public String gdsModify(GoodsVO gds) {
-		//System.out.println(gds);
-		gdsService.modifyGoods(gds);
 
-		return "redirect:/admin/goods/"+gds.getGdsNo();
-	}
-	
-	
-	//옵션 수정
-	@PostMapping("/options/{opt.optionNo}")
-	public String optionModify(OptionVO option) {
-		optService.modifyGdsOpt(option);
-		return "redirect:/admin/goods/modify/"+option.getGdsNo();
-	}
-	
-	
 	//상품 삭제(status변경)
 	@GetMapping("/delete/{gdsNo}")
 	public String goodsDelete(@PathVariable("gdsNo") int gdsNo) {
@@ -110,6 +92,88 @@ public class AdminGdsController {
 			.addAttribute("sub", catService.getSubCateList());
 		
 		return "admin/goods/post";
+	}
+	
+	//서브 카테고리 동적 요청
+	@ResponseBody
+	@PostMapping("/getsub")
+	public List<CategoryVO> getSubList(@RequestParam String c) {
+		
+		System.out.println("번호:"+c);
+		//List<CategoryVO> sub = catService.getCateListByRef(cateRef);
+		return null;
+	}
+	
+	//상품 수정 페이지
+	@GetMapping("/modify/{gdsNo}")
+	public String gdsModify(@PathVariable("gdsNo") int gdsNo, Model model) {
+		model.addAttribute("gds", gdsService.getGdsInfo(gdsNo))
+			.addAttribute("opt", optService.getOptionList(gdsNo))
+			.addAttribute("sub", catService.getSubCateList());
+		return "admin/goods/modify";		
+	}
+		
+
+	//상품 수정
+	@PostMapping("/modify")
+	public String gdsModify(GoodsVO gds,
+			@RequestParam("thumb") MultipartFile thumb,
+			@RequestParam("des") MultipartFile des,
+			@RequestParam(value = "optionNo[]") List<Integer> noArr,
+			@RequestParam(value = "optionName[]") List<String> nameArr,
+			@RequestParam(value = "optionAddPrice[]") List<Integer> priceArr,
+			@RequestParam(value = "optionCount[]") List<Integer> countArr) {
+	
+		String gdsThumbImg = fileUploadService.restore(thumb);
+		String gdsDes = fileUploadService.restore(des);
+		
+//		System.out.println("gds:"+gds);
+//		System.out.println("gdsThumb:"+gdsThumbImg);
+//		System.out.println("gdsDes:"+gdsDes);
+//		//옵션 배열값이 잘 넘어오는지 확인
+//		for(String s:nameArr) {
+//			System.out.println("name:"+s);
+//		}
+//		for(int s:priceArr) {
+//			System.out.println("price:"+s);
+//		}
+//		for(int s:countArr) {
+//			System.out.println("count:"+s);
+//		}
+		
+		gds.setGdsThumbImg(gdsThumbImg);
+		gds.setGdsDes(gdsDes);
+		System.out.println("gds:"+gds);
+		gdsService.modifyGoods(gds);
+		
+		OptionVO option = new OptionVO();
+		
+		//변경된 옵션
+		for(int i=0;i<noArr.size();i++) {
+			option.setOptionNo(noArr.get(i));
+			option.setOptionName(nameArr.get(i));
+			option.setOptionAddPrice(priceArr.get(i));
+			option.setOptionCount(countArr.get(i));
+			System.out.println("change option:"+option);
+			
+			optService.modifyGdsOpt(option);
+		}
+		
+		OptionVO opt = new OptionVO();
+		//새로 추가된 옵션
+		for(int i=noArr.size(); i<nameArr.size();i++) {
+			opt.setGdsNo(gds.getGdsNo());
+			opt.setOptionName(nameArr.get(i));
+			opt.setOptionAddPrice(priceArr.get(i));
+			opt.setOptionCount(countArr.get(i));
+			System.out.println("new option:" + opt);
+			
+			optService.addGdsOpt(opt);
+		}
+		
+		
+
+		return "redirect:/admin/goods/"+gds.getGdsNo();
 	}
 	
 

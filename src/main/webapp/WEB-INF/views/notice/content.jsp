@@ -18,7 +18,7 @@
           </div>
 
          
-        <form id="formObj" role="form" action="<c:url value='/notice/delete'/>" method="post">  
+        <form id="formObj" role="form" action="<c:url value='/admin/notices/delete'/>" method="post">  
           
           <input type="hidden" name="noticeNo" value="${notice.noticeNo}">
           <input type="hidden" name="page" value="${p.page}">
@@ -27,11 +27,11 @@
           <input type="button" value="목록" class="btn" id="list-btn">&nbsp;&nbsp;
           
          
-		<c:if test="${user.adminVerify == 9}">    
+		
 	          <input id="modBtn" type="button" value="수정" class="btn btn-warning" style="color:white;">&nbsp;&nbsp;
 	          
 	          <input type="submit" value="삭제" class="btn btn-danger" onclick="return confirm('정말로 삭제하시겠습니까?')">&nbsp;&nbsp;
-		</c:if>
+		
         </form>
 
 </div>
@@ -65,7 +65,7 @@ $(function() {
 	
 	modifyBtn.click(function() {
 		console.log("수정 버튼이 클릭됨!");
-		formElement.attr("action", "/shopping/notice/modify");
+		formElement.attr("action", "/shopping/admin/notices/modify");
 		formElement.attr("method", "get");
 		formElement.submit();
 	});

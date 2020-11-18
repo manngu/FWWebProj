@@ -75,9 +75,7 @@
 					    </c:if>
 				    </ul>
 					<!-- 페이징 처리 끝 -->
-					</div>
-				</div>
-			</div>
+	
 					<!-- 검색 버튼 -->
 					<div class="row">
 						<div class="col-sm-2"></div>
@@ -103,9 +101,9 @@
 					</div>
 					
 		
-	</div>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
+<script>
 
 
 	//글쓰기 완료 시 띄울 알림창 처리
